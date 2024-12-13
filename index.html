@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barista Dash</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="header">
+            <div id="timer">⏳ Время: 0:00</div>
+            <div id="score">⭐ Очки: 0</div>
+            <div id="notification" class="notification" style="display: none;">
+                <p id="notification-text"></p>
+                <button onclick="closeNotification()">Закрыть</button>
+            </div>
+            
+        </div>
+        
+        <p id="result" style="display:none;"></p>
+        
+        <div id="main">
+            <div id="difficulty">
+                <button id="easy">Лёгкий</button>
+                <button id="medium">Средний</button>
+            </div>
+            <div id="queue">
+                <!-- Очередь клиентов -->
+            </div>
+            <div id="kitchen">
+                <div id="ingredients">
+                    <div class="ingredient-container">
+                        <div class="ingredient" draggable="true" data-name="coffee">☕ Кофе</div>
+                        <input type="range" min="10" max="100" value="50" step="10" class="quantity" data-name="coffee">
+                        <span class="quantity-display">50 мл</span>
+                    </div>
+                    <div class="ingredient-container">
+                        <div class="ingredient" draggable="true" data-name="milk">🥛 Молоко</div>
+                        <input type="range" min="10" max="200" value="100" step="10" class="quantity" data-name="milk">
+                        <span class="quantity-display">100 мл</span>
+                    </div>
+                    <div class="ingredient-container">
+                        <div class="ingredient" draggable="true" data-name="syrup">🍯 Сироп</div>
+                        <input type="range" min="10" max="50" value="10" step="10" class="quantity" data-name="syrup">
+                        <span class="quantity-display">10 мл</span>
+                    </div>
+                </div>                
+                  <div id="cup" class="dropzone">
+                    <p>Перетащите сюда ингредиенты</p>
+                 </div>
+                 <button id="complete-order">Завершить заказ</button>
+                 <button id="reset-ingredients">Сбросить ингредиенты</button>
+
+                            
+            </div>
+            <div id="order">
+                <!-- Текущий заказ -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

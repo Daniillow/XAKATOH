@@ -1,0 +1,269 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5dc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    width: 100%;
+    height: 100%;
+    max-width: 480px; /* Ограничиваем максимальную ширину для мобильных устройств */
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+#header {
+    background: #e8d7ba;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 1.2em;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+#difficulty {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #ffefd5; /* Светлый фон для контейнера с кнопками */
+    border-radius: 8px;
+}
+
+#difficulty button {
+    padding: 12px 24px;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 45%; /* Ограничиваем ширину кнопок */
+}
+
+#difficulty button:hover {
+    background-color: #a0522d;
+}
+
+#queue, #order {
+    background: #ffefd5;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    flex: 1;
+    font-size: 14px;
+    overflow: hidden;
+    text-align: center;
+}
+
+#kitchen {
+    background: #ffe4c4;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#ingredients {
+    display: flex;
+    flex-wrap: wrap; /* Перенос элементов на новую строку */
+    gap: 10px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.ingredient-container {
+    flex: 1 1 48%; /* Элементы занимают 48% ширины и могут располагаться в две строки */
+    margin-bottom: 10px;
+}
+
+.ingredient {
+    padding: 8px;
+    background: #ffe4b5;
+    border: 1px solid #cd853f;
+    border-radius: 5px;
+    cursor: grab;
+    text-align: center;
+    width: 100%;
+}
+
+.quantity {
+    width: 80px;
+}
+
+.quantity-display {
+    font-size: 14px;
+    color: #8b4513;
+}
+
+#cup {
+    width: 100%;
+    height: 120px;
+    background: #fff5ee;
+    border: 2px dashed #8b4513;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+    color: #8b4513;
+    margin-top: 10px;
+}
+
+#cup.dragover {
+    background: #fff0f5;
+}
+
+#complete-order, #reset-ingredients {
+    padding: 15px;
+    font-size: 16px;
+    margin-top: 10px;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+#complete-order:hover, #reset-ingredients:hover {
+    background-color: #a0522d;
+}
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1000;
+    display: none;
+}
+.notification button {
+    background-color: #ff5733;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+}
+.notification button:hover {
+    background-color: #cc4527;
+}
+
+
+@media (max-width: 600px) {
+    #game-container {
+        padding: 10px;
+        max-width: 100%;
+        height: 100%;
+    }
+
+    #header {
+        font-size: 1em;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    #main {
+        padding: 5px;
+        flex-direction: column;
+    }
+
+    #queue, #order {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    #kitchen {
+        flex: 1;
+        justify-content: flex-start;
+        padding: 10px;
+    }
+
+    #ingredients {
+        flex-wrap: wrap; /* Разрешаем перенос элементов */
+        justify-content: space-between; /* Равномерное распределение элементов */
+    }
+
+    .ingredient-container {
+        flex: 1 1 48%; /* Элементы занимают 48% ширины */
+        margin-bottom: 10px;
+    }
+
+    .ingredient {
+        font-size: 12px;
+        padding: 6px;
+        margin: 5px 0;
+    }
+
+    .quantity {
+        width: 70px;
+    }
+
+    #cup {
+        height: 100px;
+        font-size: 10px;
+    }
+
+    #complete-order, #reset-ingredients {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    #difficulty {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    #difficulty button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+}
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1000;
+    display: none;
+}
+.notification button {
+    background-color: #ff5733;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+}
+.notification button:hover {
+    background-color: #cc4527;
+}
