@@ -7,6 +7,8 @@ let gameEndTimeout = null; // Таймер завершения игры
 let orderIntervalID = null; // ID интервала для заказов
 let gameTimerID = null; // ID таймера игрового цикла
 
+const userNames = ["Алексей", "Мария", "Иван", "Ольга", "Дмитрий", "Екатерина", "Максим", "Юлия", "Артур", "Наталья"];
+
 const game = {
     timer: 0,
     score: 0,
@@ -33,7 +35,12 @@ function startGame(selectedDifficulty) {
     document.getElementById("difficulty").style.display = "none"; // Скрываем выбор уровня
     showNotification(`Игра началась! Уровень сложности: ${difficulty === "easy" ? "Лёгкий" : "Средний"}`);
 
-    // Запускаем добавление заказов
+    // Инициализация начальных заказов
+    for (let i = 0; i < 1; i++) { // Добавим 3 заказа сразу
+        addClient();
+    }
+
+    // Запускаем добавление заказов с интервалом
     orderIntervalID = setInterval(addClient, orderInterval);
 
     // Запускаем игровой цикл
@@ -42,6 +49,7 @@ function startGame(selectedDifficulty) {
     // Устанавливаем таймер окончания игры
     gameEndTimeout = setTimeout(endGame, gameDuration * 1000);
 }
+
 
 // Функция завершения игры
 function endGame() {
@@ -82,10 +90,14 @@ function gameLoop() {
 
 // Функция для создания нового клиента
 function addClient() {
+    // Генерация случайного имени пользователя
+    const randomUser = userNames[Math.floor(Math.random() * userNames.length)];
+
     const orders = Object.keys(game.recipes);
     const randomOrder = orders[Math.floor(Math.random() * orders.length)];
     const client = {
         id: Date.now(),
+        name: randomUser,  // Используем случайное имя вместо заказа кофе
         order: randomOrder,
         patience: 100 // Процент терпения
     };
@@ -107,7 +119,7 @@ function renderQueue() {
     queueDiv.innerHTML = ""; // Очистить очередь
     game.queue.forEach(client => {
         const clientDiv = document.createElement("div");
-        clientDiv.textContent = `☕ ${client.order} (${client.patience}%)`;
+        clientDiv.textContent = `👤 ${client.name}  (${client.patience}%)`;  // Выводим имя пользователя
         clientDiv.onclick = () => startOrder(client);
         queueDiv.appendChild(clientDiv);
     });
@@ -132,9 +144,13 @@ function startOrder(client) {
         .map(([ingredient, amount]) => `${ingredient}: ${amount} мл`)
         .join(", ");
 
-    // Отображаем уведомление с названием заказа и его ингредиентами
-    showNotification(`Выбран заказ: "${client.order}". Ингредиенты: ${ingredientsList}`);
-    renderOrder();
+    // Отображаем заказ и его ингредиенты
+    const orderDetailsDiv = document.getElementById("order-details");
+    orderDetailsDiv.innerHTML = `
+        <p>Клиент: ${client.id}</p>
+        <p>Заказ: ${client.order}</p>
+        <p>Ингредиенты: ${ingredientsList}</p>
+    `;
 }
 
 
@@ -146,6 +162,47 @@ function isOrderValid(recipe, selectedIngredients) {
         return totalAmount === requiredAmount;
     });
 }
+
+function renderOrder() {
+    const orderDetails = document.getElementById('current-order-details');
+    const cupContents = document.getElementById('cup-contents');
+
+    if (!game.currentOrder) {
+        orderDetails.textContent = 'Выберите клиента, чтобы начать заказ';
+        cupContents.innerHTML = '<p>Перетащите сюда ингредиенты</p>';
+        return;
+    }
+
+    // Информация о заказе
+    const recipe = game.recipes[game.currentOrder.order];
+    const ingredientsList = Object.entries(recipe)
+        .map(([ingredient, amount]) => `${ingredient}: ${amount} мл`)
+        .join(', ');
+
+    orderDetails.textContent = `Заказ: ${game.currentOrder.order} (Ингредиенты: ${ingredientsList})`;
+
+    // Содержимое чашки
+    if (selectedIngredients.length === 0) {
+        cupContents.innerHTML = '<p>Перетащите сюда ингредиенты</p>';
+    } else {
+        cupContents.innerHTML = '';
+        selectedIngredients.forEach(item => {
+            const ingredientDiv = document.createElement('div');
+            ingredientDiv.textContent = `${item.name} - ${item.quantity} мл`;
+            ingredientDiv.style.fontSize = '12px';
+            cupContents.appendChild(ingredientDiv);
+        });
+    }
+}
+
+// Вызывать renderOrder после изменений текущего заказа или добавления ингредиентов
+document.getElementById('complete-order').addEventListener('click', () => {
+    // Проверка и завершение заказа
+    if (game.currentOrder) {
+        renderOrder();
+    }
+});
+
 
 // Функция проверки выполнения заказа
 function checkOrder() {

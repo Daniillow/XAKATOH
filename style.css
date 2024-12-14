@@ -34,8 +34,9 @@ body {
 #main {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;  /* Разместим элементы по бокам */
     padding: 10px;
+    gap: 20px;  /* Добавим отступ между блоками */
 }
 
 #difficulty {
@@ -63,15 +64,14 @@ body {
     background-color: #a0522d;
 }
 
-#queue, #order {
+#queue, #current-order {
     background: #ffefd5;
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 10px;
-    flex: 1;
     font-size: 14px;
     overflow: hidden;
     text-align: center;
+    width: 48%;  /* Устанавливаем ширину каждого блока */
 }
 
 #kitchen {
@@ -172,6 +172,33 @@ body {
 }
 .notification button:hover {
     background-color: #cc4527;
+}
+
+
+#orders-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#pending-orders {
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#current-order h3, #order-contents h3 {
+    margin-top: 0;
+}
+
+#cup-contents {
+    padding: 10px;
+    border: 1px dashed #ccc;
+    background-color: #fff;
+    min-height: 100px;
 }
 
 
