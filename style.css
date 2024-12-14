@@ -57,11 +57,21 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.2em;
-    width: 45%; /* Ограничиваем ширину кнопок */
+    width: 100%; /* Кнопки теперь занимают всю ширину блока */
+    max-width: 180px; /* Ограничиваем максимальную ширину кнопок, чтобы они не становились слишком большими */
+    flex-grow: 1; /* Это позволяет кнопкам равномерно растягиваться, занимая одинаковую ширину */
 }
 
-#difficulty button:hover {
-    background-color: #a0522d;
+#difficulty {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #ffefd5;
+    border-radius: 8px;
+    width: 100%;
+    flex-wrap: wrap; /* Для мобильных устройств кнопки могут быть расположены в несколько рядов */
 }
 
 #queue, #current-order {
@@ -73,6 +83,32 @@ body {
     text-align: center;
     width: 48%;  /* Устанавливаем ширину каждого блока */
 }
+
+#queue button {
+    padding: 12px 24px;
+    background-color: #8b4513;  /* Цвет дерева или теплого дерева */
+    color: white;
+    border: none;
+    border-radius: 8px;  /* Скругление углов для дружелюбного вида */
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 100%;  /* Кнопки будут растягиваться на всю ширину контейнера */
+    margin: 5px 0;  /* Отступы между кнопками */
+    text-align: center;  /* Текст будет по центру */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Легкая тень для создания эффекта глубины */
+    transition: background-color 0.3s, transform 0.2s;  /* Плавное изменение фона и эффекта нажатия */
+}
+
+#queue button:hover {
+    background-color: #a0522d;  /* Более темный цвет при наведении */
+    transform: scale(1.05);  /* Легкое увеличение при наведении для эффекта нажатия */
+}
+
+#queue button:active {
+    background-color: #cd853f;  /* Еще более темный цвет при нажатии */
+    transform: scale(0.98);  /* Эффект сжатия кнопки при нажатии */
+}
+
 
 #kitchen {
     background: #ffe4c4;
@@ -135,6 +171,7 @@ body {
     background: #fff0f5;
 }
 
+/* Для кнопок, которые могут появиться в других частях игры */
 #complete-order, #reset-ingredients {
     padding: 15px;
     font-size: 16px;
@@ -145,7 +182,12 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%;
+    width: 100%; /* Кнопки будут занимать всю ширину контейнера */
+    height: 50px; /* Устанавливаем одинаковую высоту */
+}
+
+#complete-order:hover, #reset-ingredients:hover {
+    background-color: #a0522d;
 }
 
 #complete-order:hover, #reset-ingredients:hover {
@@ -270,6 +312,7 @@ body {
     #difficulty button {
         font-size: 1em;
         padding: 10px 20px;
+        width: 100%; /* Кнопки на мобильных устройствах будут занимать всю ширину */
     }
 }
 .notification {
@@ -294,3 +337,4 @@ body {
 .notification button:hover {
     background-color: #cc4527;
 }
+

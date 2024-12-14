@@ -62,31 +62,7 @@ function endGame() {
     document.getElementById("result").textContent = `Игра окончена! Ваш счёт: ${game.score} очков. Спасибо за игру!`;
 }
 
-function gameLoop() {
-    game.timer++;
-    document.getElementById("timer").textContent = `⏳ Время: ${Math.floor(game.timer / 60)}:${game.timer % 60}`;
-    document.getElementById("score").textContent = `⭐ Очки: ${game.score}`;
 
-    // Уменьшаем терпение клиентов
-    game.queue.forEach((client, index) => {
-        client.patience -= 3;
-        if (client.patience <= 0) {
-            showNotification(`Клиент с заказом "${client.order}" ушел!`);
-            if (game.currentOrder && game.currentOrder.id === client.id) {
-                game.currentOrder = null; // Сбрасываем текущий заказ
-            }
-            game.queue.splice(index, 1); // Удаляем клиента из очереди
-            const penalty = 10;
-            if (game.score >= penalty) {
-                game.score -= penalty;
-            } else {
-                game.score = 0; // Не допускаем отрицательных очков
-            }
-        }
-    });
-
-    renderQueue();
-}
 
 // Функция для создания нового клиента
 function addClient() {
@@ -117,11 +93,20 @@ function addClient() {
 function renderQueue() {
     const queueDiv = document.getElementById("queue");
     queueDiv.innerHTML = ""; // Очистить очередь
+
     game.queue.forEach(client => {
-        const clientDiv = document.createElement("div");
-        clientDiv.textContent = `👤 ${client.name}  (${client.patience}%)`;  // Выводим имя пользователя
-        clientDiv.onclick = () => startOrder(client);
-        queueDiv.appendChild(clientDiv);
+        const clientButton = document.createElement("button");
+        clientButton.textContent = `👤 ${client.name}  (${client.patience}%)`;  // Выводим имя пользователя
+
+        // Проверка на активный заказ
+        if (game.currentOrder && game.currentOrder.id === client.id) {
+            clientButton.style.backgroundColor = "red";  // Красим кнопку в красный, если заказ активен
+        } else {
+            clientButton.style.backgroundColor = "";  // Сбрасываем цвет кнопки
+        }
+
+        clientButton.onclick = () => startOrder(client);  // Обработчик нажатия на кнопку
+        queueDiv.appendChild(clientButton);
     });
 }
 
@@ -136,7 +121,14 @@ function shiftPendingToQueue() {
 }
 
 function startOrder(client) {
+    if (game.currentOrder) {
+        // Если уже есть текущий заказ, сбрасываем стиль кнопки
+        document.querySelectorAll("button").forEach(button => button.style.backgroundColor = "");
+    }
+
     game.currentOrder = client;
+    renderQueue();  // Обновляем очередь после выбора заказа
+
     const recipe = game.recipes[client.order];
 
     // Формируем список ингредиентов
@@ -147,7 +139,7 @@ function startOrder(client) {
     // Отображаем заказ и его ингредиенты
     const orderDetailsDiv = document.getElementById("order-details");
     orderDetailsDiv.innerHTML = `
-        <p>Клиент: ${client.id}</p>
+        <p>Клиент: ${client.name}</p>
         <p>Заказ: ${client.order}</p>
         <p>Ингредиенты: ${ingredientsList}</p>
     `;
@@ -239,7 +231,7 @@ function gameLoop() {
     game.queue.forEach((client, index) => {
         client.patience -= 3;
         if (client.patience <= 0) {
-            showNotification(`Клиент с заказом "${client.order}" ушел!`);
+            showNotification(`Гость ${client.name} ушел без заказа!`);
             if (game.currentOrder && game.currentOrder.id === client.id) {
                 game.currentOrder = null; // Сбрасываем текущий заказ
             }
@@ -381,3 +373,4 @@ document.getElementById("medium").addEventListener("click", () => startGame("med
 
 // Запуск игры
 gameLoop();
+renderQueue();
