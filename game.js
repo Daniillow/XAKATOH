@@ -10,7 +10,8 @@ let gameTimerID = null; // ID таймера игрового цикла
 const game = {
     timer: 0,
     score: 0,
-    queue: [],
+    queue: [], // Текущие заказы (макс. 5)
+    pendingOrders: [], // Очередь заказов
     currentOrder: null,
     recipes: {
         "Latte": { coffee: 50, milk: 150, syrup: 10 },
@@ -18,6 +19,7 @@ const game = {
         "Cappuccino": { coffee: 50, milk: 100 }
     }
 };
+
 
 // Функция запуска игры
 function startGame(selectedDifficulty) {
@@ -87,9 +89,17 @@ function addClient() {
         order: randomOrder,
         patience: 100 // Процент терпения
     };
-    game.queue.push(client);
+
+    if (game.queue.length < 5) {
+        game.queue.push(client); // Добавляем в текущие заказы
+    } else {
+        game.pendingOrders.push(client); // Отправляем в ожидание
+    }
+
     renderQueue();
+    renderPendingOrders();
 }
+
 
 // Отображение клиентов в очереди
 function renderQueue() {
@@ -103,26 +113,30 @@ function renderQueue() {
     });
 }
 
+
+function shiftPendingToQueue() {
+    if (game.queue.length < 5 && game.pendingOrders.length > 0) {
+        const nextOrder = game.pendingOrders.shift();
+        game.queue.push(nextOrder);
+        renderQueue();
+        renderPendingOrders();
+    }
+}
+
 function startOrder(client) {
     game.currentOrder = client;
+    const recipe = game.recipes[client.order];
+
+    // Формируем список ингредиентов
+    const ingredientsList = Object.entries(recipe)
+        .map(([ingredient, amount]) => `${ingredient}: ${amount} мл`)
+        .join(", ");
+
+    // Отображаем уведомление с названием заказа и его ингредиентами
+    showNotification(`Выбран заказ: "${client.order}". Ингредиенты: ${ingredientsList}`);
     renderOrder();
 }
 
-// Показ текущего заказа
-function renderOrder() {
-    const orderDiv = document.getElementById("order");
-    if (!game.currentOrder) {
-        orderDiv.innerHTML = "<p>Выберите клиента для выполнения заказа.</p>";
-        return;
-    }
-    const recipe = game.recipes[game.currentOrder.order];
-    orderDiv.innerHTML = 
-        `<h3>Заказ: ${game.currentOrder.order}</h3>
-        <ul>
-            ${Object.entries(recipe).map(([ingredient, amount]) => `<li>${ingredient}: ${amount} мл</li>`).join("")}
-        </ul>`
-    ;
-}
 
 function isOrderValid(recipe, selectedIngredients) {
     return Object.entries(recipe).every(([ingredient, requiredAmount]) => {
@@ -174,17 +188,18 @@ function gameLoop() {
             }
             game.queue.splice(index, 1); // Удаляем клиента из очереди
             const penalty = 10;
-                if (game.score >= penalty) {
-                    game.score -= penalty;
-                        } else {
-                    game.score = 0; // Не допускаем отрицательных очков
-                    }
+            game.score = Math.max(game.score - penalty, 0);
         }
     });
 
+    shiftPendingToQueue(); // Проверяем очередь ожидания
     renderQueue();
 }
 
+function renderPendingOrders() {
+    const pendingDiv = document.getElementById("pending-orders");
+    pendingDiv.innerHTML = `<p>Заказы в очереди: ${game.pendingOrders.length}</p>`;
+}
 
 // Переменные для хранения выбранных ингредиентов и их количества
 const selectedIngredients = [];

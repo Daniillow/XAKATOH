@@ -12,16 +12,3 @@ function closeNotification() {
     notificationElement.style.display = "none";
 }
 
-function renderOrder() {
-    const orderDiv = document.getElementById("order");
-    if (!game.currentOrder) {
-        orderDiv.innerHTML = "<p>Выберите клиента для выполнения заказа.</p>";
-        return;
-    }
-    const recipe = game.recipes[game.currentOrder.order];
-    orderDiv.innerHTML = 
-        `<h3>Заказ: ${game.currentOrder.order}</h3>
-        <ul>
-            ${Object.entries(recipe).map(([ingredient, amount]) => `<li>${ingredient}: ${amount} мл</li>`).join("")}
-        </ul>`;
-}
