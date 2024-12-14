@@ -24,12 +24,13 @@ document.getElementById('reset-ingredients').addEventListener('click', () => {
 
     showNotification(`Ингредиенты сброшены! Вы потеряли ${penalty} очков.`);
 
-    // Очищаем ингредиенты и обновляем интерфейс
+    // Очищаем чашку
     selectedIngredients.length = 0;
-    cup.innerHTML = "<p>Перетащите сюда ингредиенты</p>";
+    cup.innerHTML = "<p>Перетащите сюда ингредиенты</p>";  // Очищаем визуально чашку
+    renderOrder();  // Обновляем отображение чашки
     document.getElementById("score").textContent = `⭐ Очки: ${game.score}`;
-    
 });
+
 // Функция сброса ингредиентов и текущего заказа
 function resetOrder() {
     selectedIngredients.length = 0; // Очищаем массив ингредиентов

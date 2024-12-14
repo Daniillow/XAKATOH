@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>Barista Dash</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -45,29 +46,20 @@
             
             <div id="kitchen">
                 <div id="ingredients">
-                    <div class="ingredient-container">
-                        <div class="ingredient" draggable="true" data-name="coffee">☕ Кофе</div>
-                        <input type="range" min="10" max="100" value="50" step="10" class="quantity" data-name="coffee">
-                        <span class="quantity-display">50 мл</span>
-                    </div>
-                    <div class="ingredient-container">
-                        <div class="ingredient" draggable="true" data-name="milk">🥛 Молоко</div>
-                        <input type="range" min="10" max="200" value="100" step="10" class="quantity" data-name="milk">
-                        <span class="quantity-display">100 мл</span>
-                    </div>
-                    <div class="ingredient-container">
-                        <div class="ingredient" draggable="true" data-name="syrup">🍯 Сироп</div>
-                        <input type="range" min="10" max="50" value="10" step="10" class="quantity" data-name="syrup">
-                        <span class="quantity-display">10 мл</span>
-                    </div>
-                </div>                
+                    <select id="ingredient-select">
+                        <option value="coffee" data-min="10" data-max="100" data-step="10">Кофе</option>
+                        <option value="milk" data-min="10" data-max="200" data-step="10">Молоко</option>
+                        <option value="syrup" data-min="10" data-max="50" data-step="10">Сироп</option>
+                    </select>
+                    <input type="range" id="quantity-slider" min="10" max="100" step="10" value="50">
+                    <span id="quantity-display">50 мл</span>
+                    <div id="drag-ingredient" draggable="true">coffee - 50 мл</div>
+                </div>                                               
                   <div id="cup" class="dropzone">
                     <p>Перетащите сюда ингредиенты</p>
                  </div>
                  <button id="complete-order">Завершить заказ</button>
-                 <button id="reset-ingredients">Сбросить ингредиенты</button>
-
-                            
+                 <button id="reset-ingredients">Сбросить ингредиенты</button>              
             </div>
         </div>
     </div>

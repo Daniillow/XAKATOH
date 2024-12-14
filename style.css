@@ -242,6 +242,17 @@ body {
     background-color: #fff;
     min-height: 100px;
 }
+#drag-ingredient {
+    margin-top: 10px;
+    padding: 5px;
+    background: #ffe4b5;
+    border: 1px solid #cd853f;
+    border-radius: 5px;
+    cursor: grab;
+    text-align: center;
+    width: fit-content;
+    user-select: none;
+}
 
 
 @media (max-width: 600px) {
@@ -295,9 +306,21 @@ body {
     }
 
     #cup {
-        height: 100px;
-        font-size: 10px;
+        width: 100%;
+        height: 100px;  /* Фиксированная высота для чашки */
+        background: #fff5ee;
+        border: 2px dashed #8b4513;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 12px;
+        color: #8b4513;
+        margin-top: 10px;
+        overflow: hidden; /* Прячем переполнение */
     }
+    
 
     #complete-order, #reset-ingredients {
         padding: 10px;
@@ -314,27 +337,49 @@ body {
         padding: 10px 20px;
         width: 100%; /* Кнопки на мобильных устройствах будут занимать всю ширину */
     }
-}
-.notification {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    z-index: 1000;
-    display: none;
-}
-.notification button {
-    background-color: #ff5733;
-    border: none;
-    padding: 5px 10px;
-    color: white;
-    cursor: pointer;
-}
-.notification button:hover {
-    background-color: #cc4527;
+    #ingredient-select {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    
+    #quantity-slider {
+        width: 100%;
+        margin: 10px 0;
+    }
+    #drag-ingredient {
+        margin-top: 10px;
+        padding: 5px;
+        background: #ffe4b5;
+        border: 1px solid #cd853f;
+        border-radius: 5px;
+        cursor: grab;
+        text-align: center;
+        width: fit-content;
+        user-select: none;
+        
+    }
+    .notification {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        z-index: 1000;
+        display: none;
+    }
+    .notification button {
+        background-color: #ff5733;
+        border: none;
+        padding: 5px 10px;
+        color: white;
+        cursor: pointer;
+    }
+    .notification button:hover {
+        background-color: #cc4527;
+    }
 }
 

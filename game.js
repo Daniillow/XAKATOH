@@ -155,35 +155,20 @@ function isOrderValid(recipe, selectedIngredients) {
     });
 }
 
+// Функция для обновления содержимого чашки
+// Функция для обновления содержимого чашки
 function renderOrder() {
-    const orderDetails = document.getElementById('current-order-details');
-    const cupContents = document.getElementById('cup-contents');
+    const cupContents = document.getElementById('cup');
 
-    if (!game.currentOrder) {
-        orderDetails.textContent = 'Выберите клиента, чтобы начать заказ';
-        cupContents.innerHTML = '<p>Перетащите сюда ингредиенты</p>';
-        return;
-    }
-
-    // Информация о заказе
-    const recipe = game.recipes[game.currentOrder.order];
-    const ingredientsList = Object.entries(recipe)
-        .map(([ingredient, amount]) => `${ingredient}: ${amount} мл`)
-        .join(', ');
-
-    orderDetails.textContent = `Заказ: ${game.currentOrder.order} (Ингредиенты: ${ingredientsList})`;
-
-    // Содержимое чашки
     if (selectedIngredients.length === 0) {
         cupContents.innerHTML = '<p>Перетащите сюда ингредиенты</p>';
     } else {
-        cupContents.innerHTML = '';
-        selectedIngredients.forEach(item => {
-            const ingredientDiv = document.createElement('div');
-            ingredientDiv.textContent = `${item.name} - ${item.quantity} мл`;
-            ingredientDiv.style.fontSize = '12px';
-            cupContents.appendChild(ingredientDiv);
-        });
+        // Собираем все ингредиенты в одну строку через пробел
+        const ingredientsText = selectedIngredients
+            .map(item => `${item.name} - ${item.quantity}`)  // Формируем строки "Название - Количество"
+            .join(' ');  // Соединяем все строки через пробел
+
+        cupContents.innerHTML = ingredientsText;  // Отображаем результат в чашке
     }
 }
 
@@ -265,10 +250,6 @@ quantityInputs.forEach((input, index) => {
     });
 });
 
-
-
-
-
 // Обработчик завершения заказа
 document.getElementById('complete-order').addEventListener('click', () => {
     if (!game.currentOrder) {
@@ -291,81 +272,38 @@ document.getElementById('complete-order').addEventListener('click', () => {
     }
 });
 
-// Обработка начала перетаскивания на мобильных устройствах
-ingredients.forEach(ingredient => {
-    ingredient.addEventListener('touchstart', handleTouchStart);
+const ingredientSelect = document.getElementById('ingredient-select');
+const quantitySlider = document.getElementById('quantity-slider');
+const quantityDisplay = document.getElementById('quantity-display');
+
+ingredientSelect.addEventListener('change', (event) => {
+    const selectedOption = event.target.options[event.target.selectedIndex];
+    quantitySlider.min = selectedOption.dataset.min;
+    quantitySlider.max = selectedOption.dataset.max;
+    quantitySlider.step = selectedOption.dataset.step;
+    quantitySlider.value = selectedOption.dataset.min;
+    quantityDisplay.textContent = `${quantitySlider.value} мл`;
 });
 
-function handleTouchStart(event) {
-    const ingredientName = event.target.dataset.name;
-    const quantityInput = document.querySelector(`.quantity[data-name="${ingredientName}"]`);
-    const quantity = quantityInput.value;
+quantitySlider.addEventListener('input', () => {
+    quantityDisplay.textContent = `${quantitySlider.value} мл`;
+});
 
-    // Печатаем данные об ингредиенте для тестирования
-    console.log('Начало перетаскивания ингредиента:', ingredientName, quantity);
+const ingredientText = document.getElementById('drag-ingredient');
 
-    // Сохраняем информацию об ингредиенте, который перетаскивается
-    event.target.style.opacity = '0.5'; // Делаем элемент полупрозрачным
+ingredientSelect.addEventListener('change', () => {
+    updateDragIngredientText();
+});
 
-    // Добавляем события касания для перемещения
-    event.target.addEventListener('touchmove', handleTouchMove);
-    event.target.addEventListener('touchend', handleTouchEnd);
+quantitySlider.addEventListener('input', () => {
+    updateDragIngredientText();
+});
+
+function updateDragIngredientText() {
+    const ingredientName = ingredientSelect.value;
+    const quantity = quantitySlider.value;
+    ingredientText.textContent = `${ingredientName} - ${quantity} мл`;
 }
-
-function handleTouchMove(event) {
-    const ingredient = event.target;
-
-    // Изменяем позицию ингредиента, чтобы следить за перемещением пальца
-    const touch = event.touches[0];
-    ingredient.style.position = 'absolute';
-    ingredient.style.left = `${touch.clientX - ingredient.offsetWidth / 2}px'`;
-    ingredient.style.top = `${touch.clientY - ingredient.offsetHeight / 2}px`;
-
-    event.preventDefault(); // Чтобы предотвратить стандартное поведение
-}
-
-function handleTouchEnd(event) {
-    const ingredient = event.target;
-
-    // Восстановим исходную прозрачность и позицию
-    ingredient.style.opacity = '1';
-    ingredient.style.position = 'initial';
-
-    // Проверим, если элемент находится внутри чашки
-    const touch = event.changedTouches[0];
-    const cup = document.getElementById('cup');
-    const cupRect = cup.getBoundingClientRect();
-    const ingredientRect = ingredient.getBoundingClientRect();
-
-    if (
-        touch.clientX > cupRect.left &&
-        touch.clientX < cupRect.right &&
-        touch.clientY > cupRect.top &&
-        touch.clientY < cupRect.bottom
-    ) {
-        // Если элемент в чашке, добавляем его в выбранные ингредиенты
-        const ingredientData = {
-            name: ingredient.dataset.name,
-            quantity: document.querySelector(`.quantity[data-name="${ingredient.dataset.name}"]`).value
-        };
-
-        selectedIngredients.push(ingredientData);
-
-        // Отображение добавленного ингредиента в чашке
-        const ingredientDiv = document.createElement('div');
-        ingredientDiv.textContent = `${ingredientData.name} - ${ingredientData.quantity} мл`;
-        ingredientDiv.style.fontSize = '12px';
-        ingredientDiv.style.margin = '5px';
-        cup.appendChild(ingredientDiv);
-
-        console.log('Ингредиенты в чашке:', selectedIngredients);
-    }
-
-    // Удаляем события касания
-    ingredient.removeEventListener('touchmove', handleTouchMove);
-    ingredient.removeEventListener('touchend', handleTouchEnd);
-}
-
 
 // Добавляем обработчики кнопок выбора сложности
 document.getElementById("easy").addEventListener("click", () => startGame("easy"));
