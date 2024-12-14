@@ -1,10 +1,5 @@
 // ingredients.js
 
-const selectedIngredients = [];
-
-const quantityInputs = document.querySelectorAll('.quantity');
-const quantityDisplays = document.querySelectorAll('.quantity-display');
-
 quantityInputs.forEach((input, index) => {
     input.addEventListener('input', () => {
         const value = input.value;
@@ -33,4 +28,13 @@ document.getElementById('reset-ingredients').addEventListener('click', () => {
     selectedIngredients.length = 0;
     cup.innerHTML = "<p>Перетащите сюда ингредиенты</p>";
     document.getElementById("score").textContent = `⭐ Очки: ${game.score}`;
+    
 });
+// Функция сброса ингредиентов и текущего заказа
+function resetOrder() {
+    selectedIngredients.length = 0; // Очищаем массив ингредиентов
+    cup.innerHTML = "<p>Перетащите сюда ингредиенты</p>"; // Очищаем визуально чашку
+    game.currentOrder = null; // Сбрасываем текущий заказ
+    renderOrder(); // Обновляем интерфейс заказа
+    renderQueue(); // Обновляем очередь клиентов
+}

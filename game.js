@@ -201,55 +201,7 @@ quantityInputs.forEach((input, index) => {
     });
 });
 
-/// Обработка начала перетаскивания
-ingredients.forEach(ingredient => {
-    ingredient.addEventListener('dragstart', handleDragStart);
-});
 
-function handleDragStart(event) {
-    const ingredientName = event.target.dataset.name;
-    const quantityInput = document.querySelector(`.quantity[data-name="${ingredientName}"]`);
-    const quantity = quantityInput.value;
-
-    event.dataTransfer.setData('text/plain', JSON.stringify({ name: ingredientName, quantity }));
-    event.target.style.opacity = '0.5';
-}
-
-ingredients.forEach(ingredient => {
-    ingredient.addEventListener('dragend', (event) => {
-        event.target.style.opacity = '1';
-    });
-});
-
-// Обработка перетаскивания в чашку
-cup.addEventListener('dragover', (event) => {
-    event.preventDefault();
-    cup.classList.add('dragover');
-});
-
-cup.addEventListener('dragleave', () => {
-    cup.classList.remove('dragover');
-});
-
-cup.addEventListener('drop', (event) => {
-    event.preventDefault();
-    cup.classList.remove('dragover');
-
-    // Получаем данные о перетаскиваемом ингредиенте
-    const ingredientData = JSON.parse(event.dataTransfer.getData('text/plain'));
-    if (ingredientData) {
-        selectedIngredients.push(ingredientData);
-
-        // Отображение добавленного ингредиента в чашке
-        const ingredientDiv = document.createElement('div');
-        ingredientDiv.textContent = `${ingredientData.name} - ${ingredientData.quantity} мл`;
-        ingredientDiv.style.fontSize = '12px';
-        ingredientDiv.style.margin = '5px';
-        cup.appendChild(ingredientDiv);
-
-        console.log('Ингредиенты в чашке:', selectedIngredients);
-    }
-});
 
 
 
@@ -275,14 +227,6 @@ document.getElementById('complete-order').addEventListener('click', () => {
     }
 });
 
-// Функция сброса ингредиентов и текущего заказа
-function resetOrder() {
-    selectedIngredients.length = 0; // Очищаем массив ингредиентов
-    cup.innerHTML = "<p>Перетащите сюда ингредиенты</p>"; // Очищаем визуально чашку
-    game.currentOrder = null; // Сбрасываем текущий заказ
-    renderOrder(); // Обновляем интерфейс заказа
-    renderQueue(); // Обновляем очередь клиентов
-}
 // Обработка начала перетаскивания на мобильных устройствах
 ingredients.forEach(ingredient => {
     ingredient.addEventListener('touchstart', handleTouchStart);
