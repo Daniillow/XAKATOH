@@ -16,22 +16,27 @@ cup.addEventListener('dragover', (event) => {
     event.preventDefault();  // Разрешаем сброс
 });
 
+// Слушатель события drop для чашки
 cup.addEventListener('drop', (event) => {
     event.preventDefault();
 
     // Извлекаем данные из dataTransfer
     const ingredientData = JSON.parse(event.dataTransfer.getData('text/plain'));
 
-    // Создаем элемент и добавляем его в чашку
-    const ingredientDiv = document.createElement('div');
-    ingredientDiv.textContent = `${ingredientData.name} - ${ingredientData.quantity}`;  // Показываем имя и количество
-    cup.appendChild(ingredientDiv);
+    // Проверяем, если такой ингредиент уже есть в чашке
+    const existingIngredient = selectedIngredients.find(item => item.name === ingredientData.name);
 
-    // Добавляем в массив для отслеживания выбранных ингредиентов
-    selectedIngredients.push(ingredientData);
+    if (existingIngredient) {
+        // Если ингредиент уже есть, увеличиваем количество
+        existingIngredient.quantity = parseInt(existingIngredient.quantity) + parseInt(ingredientData.quantity);
+    } else {
+        // Если ингредиента нет, добавляем новый
+        selectedIngredients.push(ingredientData);
+    }
 
     renderOrder();  // Обновляем содержимое чашки и интерфейс
 });
+
 
 // Слушатель события touchstart для мобильных устройств
 ingredientText.addEventListener('touchstart', (event) => {
@@ -88,12 +93,17 @@ ingredientText.addEventListener('touchstart', (event) => {
             touchEnd.pageY <= cupRect.bottom
         ) {
             // Если внутри чашки, добавляем ингредиент
-            const ingredientDiv = document.createElement('div');
-            ingredientDiv.textContent = `${ingredientData.name} - ${ingredientData.quantity}`;
-            cup.appendChild(ingredientDiv);
+            // Проверяем, если такой ингредиент уже есть в чашке
+            const existingIngredient = selectedIngredients.find(item => item.name === ingredientData.name);
 
-            // Добавляем в массив выбранных ингредиентов
-            selectedIngredients.push(ingredientData);
+            if (existingIngredient) {
+                // Если ингредиент уже есть, увеличиваем количество
+                existingIngredient.quantity = parseInt(existingIngredient.quantity) + parseInt(ingredientData.quantity);
+            } else {
+                // Если ингредиента нет, добавляем новый
+                selectedIngredients.push(ingredientData);
+            }
+
             renderOrder();  // Обновляем содержимое чашки
         }
 

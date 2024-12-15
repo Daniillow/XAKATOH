@@ -1,11 +1,13 @@
 // game.js
 
-let difficulty = null; // Уровень сложности
+// Получаем параметр difficulty из URL
+
 let gameDuration = 0; // Продолжительность игры в секундах
 let orderInterval = 0; // Интервал появления заказов
 let gameEndTimeout = null; // Таймер завершения игры
 let orderIntervalID = null; // ID интервала для заказов
 let gameTimerID = null; // ID таймера игрового цикла
+
 
 const userNames = ["Алексей", "Мария", "Иван", "Ольга", "Дмитрий", "Екатерина", "Максим", "Юлия", "Артур", "Наталья"];
 
@@ -25,11 +27,7 @@ const game = {
 
 // Функция запуска игры
 function startGame(selectedDifficulty) {
-    difficulty = selectedDifficulty;
-    const settings = {
-        easy: { orderInterval: 25000, gameDuration: 180 },
-        medium: { orderInterval: 5000, gameDuration: 120 }
-    };
+    document.getElementById("difficulty").style.display = "none"; // Скрываем выбор уровня
     const { orderInterval, gameDuration } = settings[difficulty];
 
     document.getElementById("difficulty").style.display = "none"; // Скрываем выбор уровня
@@ -57,10 +55,27 @@ function endGame() {
     clearInterval(gameTimerID); // Останавливаем игровой цикл
     clearTimeout(gameEndTimeout); // Сбрасываем таймер игры
 
-    // Выводим итоговый результат
-    document.getElementById("result").style.display = "block";
-    document.getElementById("result").textContent = `Игра окончена! Ваш счёт: ${game.score} очков. Спасибо за игру!`;
+    // Скрываем текущие элементы игры
+    document.getElementById("game-container").style.display = "none"; // Скрыть игру
+
+    // Показываем меню завершения игры
+    const gameOverMenu = document.getElementById("game-over-menu");
+    gameOverMenu.style.display = "block";
+
+    // Обновляем счет
+    const finalScoreElement = document.getElementById("final-score");
+    finalScoreElement.textContent = `Ваш счёт: ${game.score} очков`;
 }
+
+// Добавляем обработчик для кнопки "Играть снова"
+document.getElementById("restart-button").addEventListener("click", () => {
+    location.reload(); // Перезагружаем страницу для начала новой игры
+});
+
+// Добавляем обработчик для кнопки "В главное меню"
+document.getElementById("main-menu-button").addEventListener("click", () => {
+    window.location.href = "index.html"; // Перенаправляем в главное меню
+});
 
 
 
@@ -156,21 +171,21 @@ function isOrderValid(recipe, selectedIngredients) {
 }
 
 // Функция для обновления содержимого чашки
-// Функция для обновления содержимого чашки
 function renderOrder() {
     const cupContents = document.getElementById('cup');
 
     if (selectedIngredients.length === 0) {
         cupContents.innerHTML = '<p>Перетащите сюда ингредиенты</p>';
     } else {
-        // Собираем все ингредиенты в одну строку через пробел
+        // Собираем все ингредиенты в одну строку через пробел, учитывая количество каждого
         const ingredientsText = selectedIngredients
-            .map(item => `${item.name} - ${item.quantity}`)  // Формируем строки "Название - Количество"
+            .map(item => `${item.name} - ${item.quantity} мл`)  // Формируем строки "Название - Количество"
             .join(' ');  // Соединяем все строки через пробел
 
         cupContents.innerHTML = ingredientsText;  // Отображаем результат в чашке
     }
 }
+
 
 // Вызывать renderOrder после изменений текущего заказа или добавления ингредиентов
 document.getElementById('complete-order').addEventListener('click', () => {
@@ -197,15 +212,23 @@ function checkOrder() {
     if (isCorrect) {
         showNotification('Заказ выполнен правильно!');
         game.score += 10;
-        game.queue.shift(); // Убираем клиента
-        selectedIngredients.length = 0; // Очищаем чашку
+
+        // Убираем клиента из очереди
+        game.queue.shift();
+
+        // Сбрасываем текущий заказ
+        game.currentOrder = null;
+        selectedIngredients.length = 0;
+
+        // Очищаем содержимое контейнера "Текущий заказ"
+        document.getElementById("order-details").innerHTML = "";
+
         renderQueue();
         renderOrder();
     } else {
         showNotification('Ошибка! Проверьте рецепт.');
     }
 }
-
 
 function gameLoop() {
     game.timer++;
@@ -217,10 +240,19 @@ function gameLoop() {
         client.patience -= 3;
         if (client.patience <= 0) {
             showNotification(`Гость ${client.name} ушел без заказа!`);
+
+            // Убираем текущий заказ, если клиент был активным
             if (game.currentOrder && game.currentOrder.id === client.id) {
-                game.currentOrder = null; // Сбрасываем текущий заказ
+                game.currentOrder = null;
+
+                // Очищаем содержимое контейнера "Текущий заказ"
+                document.getElementById("order-details").innerHTML = "";
             }
-            game.queue.splice(index, 1); // Удаляем клиента из очереди
+
+            // Удаляем клиента из очереди
+            game.queue.splice(index, 1);
+
+            // Штраф за уход клиента
             const penalty = 10;
             game.score = Math.max(game.score - penalty, 0);
         }
@@ -259,14 +291,17 @@ document.getElementById('complete-order').addEventListener('click', () => {
 
     const recipe = game.recipes[game.currentOrder.order];
     if (isOrderValid(recipe, selectedIngredients)) {
-        showNotification(`Заказ "${game.currentOrder.order}" выполнен успешно!`);
+        showNotification(`Заказ гостя ${game.currentOrder.name} выполнен успешно!`);
         game.score += 10;
-        // Найти индекс текущего клиента в очереди и удалить его
+
+        // Удаляем клиента из очереди
         const clientIndex = game.queue.findIndex(client => client.id === game.currentOrder.id);
         if (clientIndex !== -1) {
-            game.queue.splice(clientIndex, 1); // Удаляем из очереди
+            game.queue.splice(clientIndex, 1); // Удаляем клиента
         }
-        resetOrder();
+
+        resetOrder(); // Сбрасываем текущий заказ
+        renderQueue(); // Обновляем очередь
     } else {
         showNotification(`Ошибка в заказе "${game.currentOrder.order}". Проверьте пропорции.`);
     }
@@ -305,10 +340,5 @@ function updateDragIngredientText() {
     ingredientText.textContent = `${ingredientName} - ${quantity} мл`;
 }
 
-// Добавляем обработчики кнопок выбора сложности
-document.getElementById("easy").addEventListener("click", () => startGame("easy"));
-document.getElementById("medium").addEventListener("click", () => startGame("medium"));
 
-// Запуск игры
-gameLoop();
-renderQueue();
+startGame(difficulty);

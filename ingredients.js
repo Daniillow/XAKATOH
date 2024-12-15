@@ -33,9 +33,8 @@ document.getElementById('reset-ingredients').addEventListener('click', () => {
 
 // Функция сброса ингредиентов и текущего заказа
 function resetOrder() {
-    selectedIngredients.length = 0; // Очищаем массив ингредиентов
-    cup.innerHTML = "<p>Перетащите сюда ингредиенты</p>"; // Очищаем визуально чашку
     game.currentOrder = null; // Сбрасываем текущий заказ
-    renderOrder(); // Обновляем интерфейс заказа
-    renderQueue(); // Обновляем очередь клиентов
+    selectedIngredients.length = 0; // Очищаем ингредиенты
+    document.getElementById("order-details").innerHTML = ""; // Очищаем контейнер текущего заказа
+    renderOrder(); // Обновляем содержимое чашки
 }

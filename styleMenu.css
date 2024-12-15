@@ -1,0 +1,121 @@
+/* Общие стили для тела страницы */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5dc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Стили для главного меню */
+#main-menu {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 480px;
+}
+
+#main-menu h1 {
+    font-size: 2em;
+    color: #8b4513;
+    margin-bottom: 20px;
+}
+
+/* Кнопка "Играть" в главном меню */
+#play-button {
+    padding: 12px 24px;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Эффекты при наведении и нажатии на кнопку "Играть" */
+#play-button:hover {
+    background-color: #a0522d;
+    transform: scale(1.05);
+}
+
+#play-button:active {
+    background-color: #cd853f;
+    transform: scale(0.98);
+}
+
+/* Меню выбора сложности */
+#difficulty-menu {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 480px;
+    display: none; /* Скрыто по умолчанию */
+}
+
+#difficulty-menu h2 {
+    font-size: 1.8em;
+    color: #8b4513;
+    margin-bottom: 20px;
+}
+
+/* Кнопки для выбора уровня сложности */
+#difficulty-menu button {
+    padding: 12px 24px;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 100%;
+    max-width: 180px;
+    margin: 10px 0;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Эффекты при наведении и нажатии на кнопки выбора сложности */
+#difficulty-menu button:hover {
+    background-color: #a0522d;
+    transform: scale(1.05);
+}
+
+#difficulty-menu button:active {
+    background-color: #cd853f;
+    transform: scale(0.98);
+}
+
+/* Медиа запросы для мобильных устройств */
+@media (max-width: 600px) {
+    /* Меню на мобильных */
+    #main-menu {
+        padding: 10px;
+    }
+
+    #play-button {
+        font-size: 1.2em;
+        padding: 10px 20px;
+    }
+
+    #difficulty-menu {
+        padding: 15px;
+    }
+
+    #difficulty-menu button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+}

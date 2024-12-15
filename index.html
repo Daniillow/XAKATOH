@@ -3,71 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <title>Barista Dash</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Barista Dash - Главное меню</title>
+    <link rel="stylesheet" href="styleMenu.css">
 </head>
 <body>
-    <div id="game-container">
-        <div id="header">
-            <div id="timer">⏳ Время: 0:00</div>
-            <div id="score">⭐ Очки: 0</div>
-            <div id="notification" class="notification" style="display: none;">
-                <p id="notification-text"></p>
-                <button onclick="closeNotification()">Закрыть</button>
-            </div>
-            
-        </div>
-        
-        <p id="result" style="display:none;"></p>
-        <div id="difficulty">
-            <button id="easy">Лёгкий</button>
-            <button id="medium">Средний</button>
-        </div>
-        <div id="main">
-            
-            <div id="main">
-                <div id="queue">
-                    <!-- Очередь клиентов -->
-                </div>
-                <div id="current-order">
-                    <h3>Текущий заказ:</h3>
-                    <div id="order-details">
-                        <!-- Здесь будет отображаться имя клиента и его заказ (кофе/еда) -->
-                    </div>
-                </div>
-            </div>
-            
-            
-            </div>
-            <div id="pending-orders">
-                <!-- Очередь заказов в ожидании -->
-            </div>
-            
-            <div id="kitchen">
-                <div id="ingredients">
-                    <select id="ingredient-select">
-                        <option value="coffee" data-min="10" data-max="100" data-step="10">Кофе</option>
-                        <option value="milk" data-min="10" data-max="200" data-step="10">Молоко</option>
-                        <option value="syrup" data-min="10" data-max="50" data-step="10">Сироп</option>
-                    </select>
-                    <input type="range" id="quantity-slider" min="10" max="100" step="10" value="50">
-                    <span id="quantity-display">50 мл</span>
-                    
-                </div>
-                <div id="drag-ingredient" draggable="true">coffee - 50 мл</div>                                               
-                  <div id="cup" class="dropzone">
-                    <p>Перетащите сюда ингредиенты</p>
-                 </div>
-                 <button id="complete-order">Завершить заказ</button>
-                 <button id="reset-ingredients">Сбросить ингредиенты</button>              
-            </div>
-        </div>
+    <div id="main-menu">
+        <h1>Barista Dash</h1>
+        <button id="play-button">Играть</button>
     </div>
-    <script src="config.js"></script>
-<script src="game.js"></script>
-<script src="ui.js"></script>
-<script src="drag-and-drop.js"></script>
-<script src="ingredients.js"></script>
+
+    <!-- Меню выбора сложности -->
+    <div id="difficulty-menu" style="display: none;">
+        <h2>Выберите уровень сложности</h2>
+        <button id="easy-button">Лёгкий</button>
+        <button id="medium-button">Средний</button>
+    </div>
+
+    <script src="menu.js"></script>
 </body>
 </html>
