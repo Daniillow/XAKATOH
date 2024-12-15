@@ -87,6 +87,11 @@ body {
     transition: background-color 0.3s, transform 0.2s;
 }
 
+#difficulty-menu {
+    display: none; /* По умолчанию скрыто */
+}
+
+
 /* Эффекты при наведении и нажатии на кнопки выбора сложности */
 #difficulty-menu button:hover {
     background-color: #a0522d;
@@ -97,6 +102,87 @@ body {
     background-color: #cd853f;
     transform: scale(0.98);
 }
+
+#game-instruction {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 480px;
+    margin: auto;
+}
+
+#game-instruction h2 {
+    font-size: 1.8em;
+    color: #8b4513;
+    margin-bottom: 10px;
+}
+
+#game-instruction img {
+    margin-bottom: 15px;
+}
+
+#start-game-button {
+    padding: 12px 24px;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#start-game-button:hover {
+    background-color: #a0522d;
+    transform: scale(1.05);
+}
+
+
+/* Стили для уведомлений */
+.notification {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 1em;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    white-space: nowrap;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Контейнер с инструкцией */
+.instruction-content, .game-instruction {
+    display: flex;
+    flex-direction: column; /* Элементы идут в колонку */
+    align-items: center;    /* Центрирование по горизонтали */
+    gap: 15px;              /* Отступ между элементами */
+    margin: 0 auto;
+}
+
+/* Изображение в инструкции */
+.instruction-img {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 15px;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* Медиа запросы для мобильных устройств */
 @media (max-width: 600px) {
@@ -113,7 +199,6 @@ body {
     #difficulty-menu {
         padding: 15px;
     }
-
     #difficulty-menu button {
         font-size: 1em;
         padding: 10px 20px;

@@ -2,9 +2,15 @@
 
 // Слушатель события dragstart для #drag-ingredient
 ingredientText.addEventListener('dragstart', (event) => {
+    const ingredientName = ingredientText.textContent.split(' - ')[0];  // Имя ингредиента, например "Кофе"
+    const quantity = parseInt(ingredientText.textContent.split(' - ')[1]);  // Количество, например "50 мл"
+
+    // Используем translateIngredient для получения русского названия ингредиента
+    const translatedName = translateIngredient(ingredientName);
+
     const ingredientData = {
-        name: ingredientText.textContent.split(' - ')[0],  // Имя ингредиента, например "Кофе"
-        quantity: ingredientText.textContent.split(' - ')[1],  // Количество, например "50 мл"
+        name: translatedName,  // Имя ингредиента на русском
+        quantity: quantity,    // Количество
     };
 
     // Сохраняем данные о ингредиенте в dataTransfer
@@ -37,21 +43,20 @@ cup.addEventListener('drop', (event) => {
     renderOrder();  // Обновляем содержимое чашки и интерфейс
 });
 
-
 // Слушатель события touchstart для мобильных устройств
 ingredientText.addEventListener('touchstart', (event) => {
     // Остановим стандартное поведение (например, предотвращаем прокрутку страницы)
     event.preventDefault();
 
-    // Получаем данные о выбранном ингредиенте
-    const ingredientData = {
-        name: ingredientText.textContent.split(' - ')[0],  // Имя ингредиента, например "Кофе"
-        quantity: ingredientText.textContent.split(' - ')[1],  // Количество, например "50 мл"
-    };
+    const ingredientName = ingredientText.textContent.split(' - ')[0];  // Имя ингредиента, например "Кофе"
+    const quantity = parseInt(ingredientText.textContent.split(' - ')[1]);  // Количество, например "50 мл"  // Количество, например "50 мл"
+
+    // Переводим имя ингредиента на русский
+    const translatedName = translateIngredient(ingredientName);
 
     // Создаем новый элемент для отображения перетаскиваемого ингредиента
     const dragElement = document.createElement('div');
-    dragElement.textContent = `${ingredientData.name} - ${ingredientData.quantity}`;
+    dragElement.textContent = `${translatedName} - ${quantity}`;  // Переводим имя ингредиента
     dragElement.style.position = 'absolute';
     dragElement.style.zIndex = '9999';
     dragElement.style.background = '#ffe4b5';  // Цвет фона для перетаскиваемого элемента
@@ -67,6 +72,12 @@ ingredientText.addEventListener('touchstart', (event) => {
     // Задаем начальные стили для перетаскиваемого элемента
     dragElement.style.left = `${startX - dragElement.offsetWidth / 2}px`;
     dragElement.style.top = `${startY - dragElement.offsetHeight / 2}px`;
+
+    // Сохраняем данные ингредиента
+    const ingredientData = {
+        name: translatedName,
+        quantity: quantity
+    };
 
     // Обработчик для движения пальца
     const moveHandler = (moveEvent) => {
@@ -93,7 +104,6 @@ ingredientText.addEventListener('touchstart', (event) => {
             touchEnd.pageY <= cupRect.bottom
         ) {
             // Если внутри чашки, добавляем ингредиент
-            // Проверяем, если такой ингредиент уже есть в чашке
             const existingIngredient = selectedIngredients.find(item => item.name === ingredientData.name);
 
             if (existingIngredient) {
@@ -104,16 +114,11 @@ ingredientText.addEventListener('touchstart', (event) => {
                 selectedIngredients.push(ingredientData);
             }
 
-            renderOrder();  // Обновляем содержимое чашки
+            renderOrder();  // Обновляем содержимое чашки и интерфейс
         }
-
-        // Убираем обработчики событий для движения и завершения
-        document.removeEventListener('touchmove', moveHandler);
-        document.removeEventListener('touchend', endHandler);
     };
 
-    // Добавляем слушатели для перемещения пальца и окончания перетаскивания
+    // Привязываем обработчики для перемещения и окончания перетаскивания
     document.addEventListener('touchmove', moveHandler);
-    document.addEventListener('touchend', endHandler);
+    document.addEventListener('touchend', endHandler, { once: true });
 });
-

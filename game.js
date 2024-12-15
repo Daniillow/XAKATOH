@@ -20,9 +20,43 @@ const game = {
     recipes: {
         "Latte": { coffee: 50, milk: 150, syrup: 10 },
         "Espresso": { coffee: 100 },
-        "Cappuccino": { coffee: 50, milk: 100 }
+        "Cappuccino": { coffee: 50, milk: 100 },
+        "Moccona": { coffee: 50, milk: 100, chocolate: 20 },
+        "Americano": { coffee: 100, water: 100 },
+        "Macchiato": { coffee: 80, milkFoam: 20 },
+        "Flat White": { coffee: 60, milk: 120 },
+        "Irish Coffee": { coffee: 50, whiskey: 20, cream: 30 },
+        "Affogato": { coffee: 50, iceCream: 50 }
     }
 };
+
+const availableIngredients = [
+    { value: "coffee", name: "Кофе", min: 10, max: 100, step: 10 },
+    { value: "milk", name: "Молоко", min: 10, max: 200, step: 10 },
+    { value: "syrup", name: "Сироп", min: 10, max: 50, step: 10 },
+    { value: "chocolate", name: "Шоколад", min: 10, max: 50, step: 10 },
+    { value: "water", name: "Вода", min: 50, max: 200, step: 10 },
+    { value: "milkFoam", name: "Молочная пена", min: 10, max: 50, step: 10 },
+    { value: "whiskey", name: "Виски", min: 10, max: 30, step: 5 },
+    { value: "cream", name: "Сливки", min: 10, max: 50, step: 10 },
+    { value: "iceCream", name: "Мороженое", min: 10, max: 100, step: 10 }
+];
+
+const ingredientTranslations = {
+    coffee: "Кофе",
+    milk: "Молоко",
+    syrup: "Сироп",
+    chocolate: "Шоколад",
+    water: "Вода",
+    milkFoam: "Молочная пена",
+    whiskey: "Виски",
+    cream: "Сливки",
+    iceCream: "Мороженое"
+};
+
+function translateIngredient(ingredient) {
+    return ingredientTranslations[ingredient] || ingredient;
+}
 
 
 // Функция запуска игры
@@ -79,24 +113,22 @@ document.getElementById("main-menu-button").addEventListener("click", () => {
 
 
 
-// Функция для создания нового клиента
+// Функция для генерации случайного заказа с новыми рецептами
 function addClient() {
-    // Генерация случайного имени пользователя
     const randomUser = userNames[Math.floor(Math.random() * userNames.length)];
-
     const orders = Object.keys(game.recipes);
     const randomOrder = orders[Math.floor(Math.random() * orders.length)];
     const client = {
         id: Date.now(),
-        name: randomUser,  // Используем случайное имя вместо заказа кофе
+        name: randomUser,
         order: randomOrder,
         patience: 100 // Процент терпения
     };
 
     if (game.queue.length < 3) {
-        game.queue.push(client); // Добавляем в текущие заказы
+        game.queue.push(client);
     } else {
-        game.pendingOrders.push(client); // Отправляем в ожидание
+        game.pendingOrders.push(client);
     }
 
     renderQueue();
@@ -148,8 +180,10 @@ function startOrder(client) {
 
     // Формируем список ингредиентов
     const ingredientsList = Object.entries(recipe)
-        .map(([ingredient, amount]) => `${ingredient}: ${amount} мл`)
-        .join(", ");
+        .map(([ingredient, amount]) => `${translateIngredient(ingredient)}: ${amount} мл`)  // Переводим названия
+        .join(', ');  // Разделяем ингредиенты запятой
+
+
 
     // Отображаем заказ и его ингредиенты
     const orderDetailsDiv = document.getElementById("order-details");
@@ -163,12 +197,19 @@ function startOrder(client) {
 
 function isOrderValid(recipe, selectedIngredients) {
     return Object.entries(recipe).every(([ingredient, requiredAmount]) => {
+        // Переводим ингредиент в его отображаемое название (например, 'coffee' -> 'Кофе')
+        const translatedIngredient = translateIngredient(ingredient);
+
+        // Находим все выбранные ингредиенты, которые соответствуют переведенному названию
         const totalAmount = selectedIngredients
-            .filter(item => item.name === ingredient)
+            .filter(item => item.name === translatedIngredient)
             .reduce((sum, item) => sum + parseInt(item.quantity), 0);
+
         return totalAmount === requiredAmount;
     });
 }
+
+
 
 // Функция для обновления содержимого чашки
 function renderOrder() {
@@ -179,56 +220,74 @@ function renderOrder() {
     } else {
         // Собираем все ингредиенты в одну строку через пробел, учитывая количество каждого
         const ingredientsText = selectedIngredients
-            .map(item => `${item.name} - ${item.quantity} мл`)  // Формируем строки "Название - Количество"
-            .join(' ');  // Соединяем все строки через пробел
+            .map(item => `${translateIngredient(item.name)} - ${item.quantity} мл`)  // Переводим название
+            .join(', ');  // Объединяем строки
 
         cupContents.innerHTML = ingredientsText;  // Отображаем результат в чашке
     }
 }
 
 
-// Вызывать renderOrder после изменений текущего заказа или добавления ингредиентов
 document.getElementById('complete-order').addEventListener('click', () => {
-    // Проверка и завершение заказа
-    if (game.currentOrder) {
-        renderOrder();
+    // Проверяем, выбран ли клиент и есть ли ингредиенты для заказа
+    if (!game.currentOrder || selectedIngredients.length === 0) {
+        showNotification("Выберите клиента и ингредиенты для выполнения заказа!");
+        return;
+    }
+
+    const recipe = game.recipes[game.currentOrder.order];
+    const isCorrect = isOrderValid(recipe, selectedIngredients);
+
+    if (isCorrect) {
+        // Вычисление баллов
+        const scoreBonus = calculateScore(game.currentOrder.order, game.currentOrder.patience);
+        game.score += scoreBonus;
+
+        showNotification(`Заказ гостя ${game.currentOrder.name} выполнен успешно! Вы заработали ${scoreBonus} очков.`);
+
+        // Удаляем клиента из очереди
+        const clientIndex = game.queue.findIndex(client => client.id === game.currentOrder.id);
+        if (clientIndex !== -1) {
+            game.queue.splice(clientIndex, 1); // Удаляем клиента
+        }
+
+        resetOrder(); // Сбрасываем текущий заказ
+        renderQueue(); // Обновляем очередь
+    } else {
+        showNotification(`Ошибка в заказе у гостя ${game.currentOrder.name}. Проверьте пропорции.`);
     }
 });
+
 
 
 // Функция проверки выполнения заказа
 function checkOrder() {
     const currentRecipe = game.recipes[game.currentOrder.order];
-    const recipeKeys = Object.keys(currentRecipe);
-    const isCorrect = recipeKeys.every(key => {
-        const requiredAmount = currentRecipe[key];
-        const totalAmount = selectedIngredients
-            .filter(ingredient => ingredient.name === key)
-            .reduce((sum, ingredient) => sum + parseInt(ingredient.quantity), 0);
-
-        return totalAmount === requiredAmount;
-    });
+    const isCorrect = isOrderValid(currentRecipe, selectedIngredients);
 
     if (isCorrect) {
-        showNotification('Заказ выполнен правильно!');
-        game.score += 10;
+        // Вычисление баллов
+        const scoreBonus = calculateScore(game.currentOrder.order, game.currentOrder.patience);
+
+        // Увеличиваем счет на количество баллов
+        game.score += scoreBonus;
+
+        showNotification(`Заказ выполнен правильно! Вы заработали ${scoreBonus} очков.`);
 
         // Убираем клиента из очереди
-        game.queue.shift();
+        const clientIndex = game.queue.findIndex(client => client.id === game.currentOrder.id);
+        if (clientIndex !== -1) {
+            game.queue.splice(clientIndex, 1); // Удаляем клиента
+        }
 
-        // Сбрасываем текущий заказ
-        game.currentOrder = null;
-        selectedIngredients.length = 0;
-
-        // Очищаем содержимое контейнера "Текущий заказ"
-        document.getElementById("order-details").innerHTML = "";
-
-        renderQueue();
-        renderOrder();
+        resetOrder(); // Сбрасываем текущий заказ
+        renderQueue(); // Обновляем очередь
     } else {
-        showNotification('Ошибка! Проверьте рецепт.');
+        showNotification(`Ошибка в заказе! Проверьте пропорции.`);
     }
 }
+
+
 
 function gameLoop() {
     game.timer++;
@@ -282,42 +341,24 @@ quantityInputs.forEach((input, index) => {
     });
 });
 
-// Обработчик завершения заказа
-document.getElementById('complete-order').addEventListener('click', () => {
-    if (!game.currentOrder) {
-        showNotification("Выберите клиента для выполнения заказа!");
-        return;
-    }
 
-    const recipe = game.recipes[game.currentOrder.order];
-    if (isOrderValid(recipe, selectedIngredients)) {
-        showNotification(`Заказ гостя ${game.currentOrder.name} выполнен успешно!`);
-        game.score += 10;
-
-        // Удаляем клиента из очереди
-        const clientIndex = game.queue.findIndex(client => client.id === game.currentOrder.id);
-        if (clientIndex !== -1) {
-            game.queue.splice(clientIndex, 1); // Удаляем клиента
-        }
-
-        resetOrder(); // Сбрасываем текущий заказ
-        renderQueue(); // Обновляем очередь
-    } else {
-        showNotification(`Ошибка в заказе "${game.currentOrder.order}". Проверьте пропорции.`);
-    }
-});
 
 const ingredientSelect = document.getElementById('ingredient-select');
 const quantitySlider = document.getElementById('quantity-slider');
 const quantityDisplay = document.getElementById('quantity-display');
 
-ingredientSelect.addEventListener('change', (event) => {
-    const selectedOption = event.target.options[event.target.selectedIndex];
-    quantitySlider.min = selectedOption.dataset.min;
-    quantitySlider.max = selectedOption.dataset.max;
-    quantitySlider.step = selectedOption.dataset.step;
-    quantitySlider.value = selectedOption.dataset.min;
-    quantityDisplay.textContent = `${quantitySlider.value} мл`;
+ingredientSelect.addEventListener('change', () => {
+    const selectedOption = ingredientSelect.options[ingredientSelect.selectedIndex];
+    const min = parseInt(selectedOption.dataset.min);
+    const max = parseInt(selectedOption.dataset.max);
+    const step = parseInt(selectedOption.dataset.step);
+
+    quantitySlider.min = min;
+    quantitySlider.max = max;
+    quantitySlider.step = step;
+    quantitySlider.value = min;
+
+    quantityDisplay.textContent = `${min} мл`;
 });
 
 quantitySlider.addEventListener('input', () => {
@@ -334,11 +375,36 @@ quantitySlider.addEventListener('input', () => {
     updateDragIngredientText();
 });
 
+// Функция для вычисления баллов за заказ
+function calculateScore(order, patience) {
+    let baseScore = 10; // Базовые баллы за выполнение заказа
+
+    // Добавляем бонус в зависимости от сложности рецепта
+    const recipe = game.recipes[order];
+    const complexityBonus = Object.keys(recipe).length * 2; // Например, каждый ингредиент увеличивает сложность на 2 балла
+    baseScore += complexityBonus;
+
+    // Добавляем бонус в зависимости от терпения клиента
+    const patienceBonus = Math.floor(patience / 10); // Бонус за терпение (чем больше терпение, тем больше бонус)
+    baseScore += patienceBonus;
+
+    return baseScore;
+}
+
 function updateDragIngredientText() {
     const ingredientName = ingredientSelect.value;
     const quantity = quantitySlider.value;
-    ingredientText.textContent = `${ingredientName} - ${quantity} мл`;
+    ingredientText.textContent = `${translateIngredient(ingredientName)} - ${quantity} мл`;
 }
 
+availableIngredients.forEach(ingredient => {
+    const option = document.createElement('option');
+    option.value = ingredient.value;
+    option.textContent = ingredient.name;
+    option.dataset.min = ingredient.min;
+    option.dataset.max = ingredient.max;
+    option.dataset.step = ingredient.step;
+    ingredientSelect.appendChild(option);
+});
 
 startGame(difficulty);
