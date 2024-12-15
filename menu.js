@@ -31,6 +31,9 @@ document.getElementById('easy-button').addEventListener('click', () => {
 document.getElementById('medium-button').addEventListener('click', () => {
     startGame('medium');
 });
+document.getElementById('hard-button').addEventListener('click', () => {
+    startGame('hard');
+});
 const bgMusic = document.getElementById('background-music');
 const musicToggle = document.getElementById('music-toggle'); // Кнопка для включения/выключения музыки
 const musicVolumeSlider = document.getElementById('music-volume-slider'); // Слайдер для громкости

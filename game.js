@@ -65,7 +65,7 @@ function startGame(selectedDifficulty) {
     const { orderInterval, gameDuration } = settings[difficulty];
 
     document.getElementById("difficulty").style.display = "none"; // Скрываем выбор уровня
-    showNotification(`Игра началась! Уровень сложности: ${difficulty === "easy" ? "Лёгкий" : "Средний"}`);
+    showNotification(`Игра началась! Уровень сложности: ${difficulty === "easy" ? "Лёгкий" : difficulty === "medium" ? "Средний" : "Тяжелый"}`);
 
     // Инициализация начальных заказов
     for (let i = 0; i < 1; i++) { // Добавим 3 заказа сразу
