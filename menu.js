@@ -53,24 +53,12 @@ musicVolumeSlider.addEventListener('input', (e) => {
     localStorage.setItem('musicVolume', volume);
 });
 
-// Инициализация настроек из localStorage
-window.addEventListener('load', () => {
-    const savedMusicEnabled = localStorage.getItem('musicEnabled');
-    const savedMusicVolume = localStorage.getItem('musicVolume');
-
-    if (savedMusicEnabled === 'false') {
-        bgMusic.pause();
-    } else {
-        bgMusic.play();
-    }
-
-    if (savedMusicVolume !== null) {
-        bgMusic.volume = parseFloat(savedMusicVolume);
-        musicVolumeSlider.value = savedMusicVolume * 100; // Преобразуем громкость обратно для слайдера
-    }
-});
 
 
 function startGame(difficulty) {
-    window.location.href = `game.html?difficulty=${difficulty}`;
+    const musicEnabled = bgMusic.paused ? 'false' : 'true';
+    const musicVolume = bgMusic.volume;
+
+    // Передача параметров через строку запроса
+    window.location.href = `game.html?difficulty=${difficulty}&musicEnabled=${musicEnabled}&musicVolume=${musicVolume}`;
 }

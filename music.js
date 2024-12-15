@@ -1,19 +1,25 @@
 const bgMusic = document.getElementById('background-music');
 
-// Применяем настройки из localStorage
-window.addEventListener('load', () => {
-    const savedMusicEnabled = localStorage.getItem('musicEnabled');
-    const savedMusicVolume = localStorage.getItem('musicVolume');
+// Получение параметров из строки запроса
+const params = new URLSearchParams(window.location.search);
+const musicEnabled = params.get('musicEnabled'); // "true" или "false"
+const musicVolume = parseFloat(params.get('musicVolume')); // число от 0 до 1
 
-    if (bgMusic) {
-        if (savedMusicEnabled === 'false') {
-            bgMusic.pause();
-        } else {
-            bgMusic.play();
-        }
-
-        if (savedMusicVolume !== null) {
-            bgMusic.volume = parseFloat(savedMusicVolume);
-        }
+console.log(musicEnabled);
+console.log(bgMusic.volume);
+if (bgMusic) {
+    // Настройка состояния музыки
+    if (musicEnabled === 'false') {
+        bgMusic.pause();
+    } else {
+        bgMusic.play();
     }
-});
+
+    // Настройка громкости, если параметр передан
+    if (!isNaN(musicVolume)) {
+        bgMusic.volume = musicVolume;
+    }
+}
+console.log(bgMusic.volume);
+
+
