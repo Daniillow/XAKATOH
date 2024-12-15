@@ -256,130 +256,58 @@ body {
 
 
 @media (max-width: 600px) {
+    /* Общие настройки для мобильных устройств */
+    body {
+        font-size: 14px;  /* Уменьшаем общий размер шрифта */
+    }
+
     #game-container {
         padding: 10px;
         max-width: 100%;
         height: 100%;
-    }
-
-    #header {
-        font-size: 1em;
         flex-direction: column;
-        justify-content: center;
-        text-align: center;
-    }
-
-    #main {
-        padding: 5px;
-        flex-direction: column;
-    }
-
-    #queue, #order {
-        font-size: 12px;
-        padding: 5px;
-    }
-
-    #kitchen {
-        flex: 1;
-        justify-content: flex-start;
-        padding: 10px;
-    }
-
-    #ingredients {
-        flex-wrap: wrap; /* Разрешаем перенос элементов */
-        justify-content: space-between; /* Равномерное распределение элементов */
-    }
-
-    .ingredient-container {
-        flex: 1 1 48%; /* Элементы занимают 48% ширины */
-        margin-bottom: 10px;
-    }
-
-    .ingredient {
-        font-size: 12px;
-        padding: 6px;
-        margin: 5px 0;
-    }
-
-    .quantity {
-        width: 70px;
-    }
-
-    #cup {
-        width: 100%;
-        height: 100px;  /* Фиксированная высота для чашки */
-        background: #fff5ee;
-        border: 2px dashed #8b4513;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-size: 12px;
-        color: #8b4513;
-        margin-top: 10px;
-        overflow: hidden; /* Прячем переполнение */
-    }
-    
-
-    #complete-order, #reset-ingredients {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    #difficulty {
-        flex-direction: column;
-        padding: 15px;
     }
 
     #difficulty button {
-        font-size: 1em;
-        padding: 10px 20px;
-        width: 100%; /* Кнопки на мобильных устройствах будут занимать всю ширину */
+        padding: 10px;
+        font-size: 0.8em;  /* Меньше размер шрифта на мобильных */
+        max-width: 100%; /* Кнопки занимают всю ширину */
     }
-    #ingredient-select {
-        width: 100%;
-        padding: 5px;
-        margin-bottom: 10px;
+
+    #queue, #current-order, #pending-orders {
+        font-size: 12px;
+        padding: 8px;
     }
-    
-    #quantity-slider {
-        width: 100%;
-        margin: 10px 0;
+
+    #ingredients {
+        flex-wrap: wrap;
+        gap: 5px;
     }
-    #drag-ingredient {
-        margin-top: 10px;
-        padding: 5px;
-        background: #ffe4b5;
-        border: 1px solid #cd853f;
-        border-radius: 5px;
-        cursor: grab;
-        text-align: center;
-        width: fit-content;
-        user-select: none;
-        
+
+    .ingredient-container {
+        flex: 1 1 45%;  /* Уменьшаем размер контейнера */
+        margin-bottom: 5px;
     }
-    .notification {
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 15px;
-        border-radius: 8px;
-        z-index: 1000;
-        display: none;
+
+    #cup {
+        height: 50%;  /* Уменьшаем высоту чашки */
+        width: 50%;
     }
-    .notification button {
-        background-color: #ff5733;
-        border: none;
-        padding: 5px 10px;
-        color: white;
-        cursor: pointer;
+
+    #complete-order, #reset-ingredients {
+        padding: 10px;
+        font-size: 14px;  /* Уменьшаем размер шрифта */
+        height: 40px;  /* Уменьшаем высоту кнопок */
     }
-    .notification button:hover {
-        background-color: #cc4527;
+
+    #cup-contents {
+        font-size: 10px;  /* Уменьшаем шрифт */
+    }
+    #queue button {
+        padding: 8px 16px;  /* Уменьшаем отступы для кнопок */
+        font-size: 1em;  /* Уменьшаем размер шрифта */
+        height: 40px;  /* Уменьшаем высоту кнопок */
     }
 }
+
 

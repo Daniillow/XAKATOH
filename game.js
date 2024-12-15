@@ -78,7 +78,7 @@ function addClient() {
         patience: 100 // Процент терпения
     };
 
-    if (game.queue.length < 5) {
+    if (game.queue.length < 3) {
         game.queue.push(client); // Добавляем в текущие заказы
     } else {
         game.pendingOrders.push(client); // Отправляем в ожидание
@@ -112,7 +112,7 @@ function renderQueue() {
 
 
 function shiftPendingToQueue() {
-    if (game.queue.length < 5 && game.pendingOrders.length > 0) {
+    if (game.queue.length < 3 && game.pendingOrders.length > 0) {
         const nextOrder = game.pendingOrders.shift();
         game.queue.push(nextOrder);
         renderQueue();

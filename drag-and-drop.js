@@ -48,8 +48,6 @@ ingredientText.addEventListener('touchstart', (event) => {
     const dragElement = document.createElement('div');
     dragElement.textContent = `${ingredientData.name} - ${ingredientData.quantity}`;
     dragElement.style.position = 'absolute';
-    dragElement.style.left = `${event.touches[0].pageX}px`;
-    dragElement.style.top = `${event.touches[0].pageY}px`;
     dragElement.style.zIndex = '9999';
     dragElement.style.background = '#ffe4b5';  // Цвет фона для перетаскиваемого элемента
     dragElement.style.padding = '5px';
@@ -57,11 +55,20 @@ ingredientText.addEventListener('touchstart', (event) => {
     dragElement.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
     document.body.appendChild(dragElement);  // Добавляем этот элемент в DOM
 
+    // Получаем позицию элемента на странице
+    const startX = event.touches[0].pageX;
+    const startY = event.touches[0].pageY;
+
+    // Задаем начальные стили для перетаскиваемого элемента
+    dragElement.style.left = `${startX - dragElement.offsetWidth / 2}px`;
+    dragElement.style.top = `${startY - dragElement.offsetHeight / 2}px`;
+
     // Обработчик для движения пальца
     const moveHandler = (moveEvent) => {
         const touchMove = moveEvent.touches[0];
-        dragElement.style.left = `${touchMove.pageX}px`;
-        dragElement.style.top = `${touchMove.pageY}px`;
+        // Обновляем позицию перетаскиваемого элемента относительно родительского контейнера
+        dragElement.style.left = `${touchMove.pageX - dragElement.offsetWidth / 2}px`;
+        dragElement.style.top = `${touchMove.pageY - dragElement.offsetHeight / 2}px`;
     };
 
     // Обработчик для завершения перетаскивания
@@ -99,3 +106,4 @@ ingredientText.addEventListener('touchstart', (event) => {
     document.addEventListener('touchmove', moveHandler);
     document.addEventListener('touchend', endHandler);
 });
+
