@@ -1,42 +1,65 @@
+@import url(fonts/stylesheet.css);
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+#game-container,
 body {
-    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center
+}
+
+body {
+    font-family: "Visby CF", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     margin: 0;
     padding: 0;
-    background: #f5f5dc;
-    display: flex;
-    justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden;
+    accent-color: #e4002b;
+}
+
+::selection {
+    background-color: #e4002b;
+    color: #fff;
 }
 
 #game-container {
+    padding: 20px;
     width: 100%;
-    height: 100%;
-    max-width: 480px; /* Ограничиваем максимальную ширину для мобильных устройств */
+    max-width: 480px;
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    display: flex;
     flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+}
+
+#header,
+#main {
+    display: flex;
+    justify-content: space-between
 }
 
 #header {
-    background: #e8d7ba;
-    display: flex;
-    justify-content: space-between;
+    border: solid 1px #000;
     padding: 10px;
     font-size: 1.2em;
     text-align: center;
     flex-wrap: wrap;
+    border-radius: 10px
 }
 
 #main {
     flex: 0;
-    display: flex;
-    justify-content: space-between;  /* Разместим элементы по бокам */
-    padding: 10px;
-    gap: 20px;  /* Добавим отступ между блоками */
+    padding: 10px 0;
+    gap: 20px
 }
 
 #difficulty {
@@ -45,488 +68,456 @@ body {
     gap: 10px;
     margin-bottom: 10px;
     padding: 10px;
-    background: #ffefd5; /* Светлый фон для контейнера с кнопками */
-    border-radius: 8px;
+    border: solid 1px #000;
+    border-radius: 10px;
+    width: 100%;
+    flex-wrap: wrap
 }
 
 #difficulty button {
     padding: 12px 24px;
-    background-color: #8b4513;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    background-color: #fff;
+    border: solid 1px;
+    border-radius: 50px;
     cursor: pointer;
     font-size: 1.2em;
-    width: 100%; /* Кнопки теперь занимают всю ширину блока */
-    max-width: 180px; /* Ограничиваем максимальную ширину кнопок, чтобы они не становились слишком большими */
-    flex-grow: 1; /* Это позволяет кнопкам равномерно растягиваться, занимая одинаковую ширину */
-}
-
-#difficulty {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    background: #ffefd5;
-    border-radius: 8px;
     width: 100%;
-    flex-wrap: wrap; /* Для мобильных устройств кнопки могут быть расположены в несколько рядов */
+    max-width: 180px;
+    flex-grow: 1
 }
 
-#queue, #current-order {
-    background: #ffefd5;
-    padding: 10px;
-    border-radius: 5px;
+#current-order,
+#queue,
+#queue button {
+    border-radius: 10px;
     font-size: 14px;
-    overflow: hidden;
     text-align: center;
-    width: 48%;  /* Устанавливаем ширину каждого блока */
+    width: 100%
 }
 
 #queue button {
     padding: 12px 24px;
-    background-color: #8b4513;  /* Цвет дерева или теплого дерева */
-    color: white;
-    border: none;
-    border-radius: 8px;  /* Скругление углов для дружелюбного вида */
+    background-color: #fff;
+    border: solid 1px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 1.2em;
-    width: 100%;  /* Кнопки будут растягиваться на всю ширину контейнера */
-    margin: 5px 0;  /* Отступы между кнопками */
-    text-align: center;  /* Текст будет по центру */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Легкая тень для создания эффекта глубины */
-    transition: background-color 0.3s, transform 0.2s;  /* Плавное изменение фона и эффекта нажатия */
+    margin: 5px 0;
+    transition: background-color .3s, transform .2s
 }
 
 #queue button:hover {
-    background-color: #a0522d;  /* Более темный цвет при наведении */
-    transform: scale(1.05);  /* Легкое увеличение при наведении для эффекта нажатия */
+    background-color: #f0f0f0;
+    transform: scale(1.05)
 }
 
 #queue button:active {
-    background-color: #cd853f;  /* Еще более темный цвет при нажатии */
-    transform: scale(0.98);  /* Эффект сжатия кнопки при нажатии */
+    background-color: #f2f2f2;
+    transform: scale(.98)
 }
 
+#ingredients,
+#kitchen {
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
 
 #kitchen {
-    background: #ffe4c4;
+    border: solid 1px #000;
     padding: 10px;
-    display: flex;
     flex-direction: column;
-    gap: 10px;
     justify-content: center;
-    align-items: center;
+    border-radius: 10px
 }
 
 #ingredients {
-    display: flex;
-    flex-wrap: wrap; /* Перенос элементов на новую строку */
-    gap: 10px;
+    flex-wrap: wrap;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-between
 }
 
 .ingredient-container {
-    flex: 1 1 48%; /* Элементы занимают 48% ширины и могут располагаться в две строки */
-    margin-bottom: 10px;
+    flex: 1 1 48%;
+    margin-bottom: 10px
+}
+
+#cup,
+.ingredient {
+    width: 100%;
+    text-align: center
 }
 
 .ingredient {
     padding: 8px;
-    background: #ffe4b5;
-    border: 1px solid #cd853f;
+    border: 1px solid #7d0017;
     border-radius: 5px;
-    cursor: grab;
-    text-align: center;
-    width: 100%;
+    cursor: grab
 }
 
 .quantity {
-    width: 80px;
+    width: 80px
 }
 
 .quantity-display {
     font-size: 14px;
-    color: #8b4513;
+    color: #e4002b
 }
 
 #cup {
-    width: 100%;
     height: 120px;
-    background: #fff5ee;
-    border: 2px dashed #8b4513;
+    background: #fff;
+    border: 2px dashed #e4002b;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    font-size: 12px;
-    color: #8b4513;
-    margin-top: 10px;
+    color: #e4002b;
+    margin-top: 10px
 }
 
 #cup.dragover {
-    background: #fff0f5;
+    background: #fff0f5
 }
 
-/* Для кнопок, которые могут появиться в других частях игры */
-#complete-order, #reset-ingredients {
+#complete-order,
+#reset-ingredients {
     padding: 15px;
-    font-size: 16px;
     margin-top: 10px;
-    background-color: #8b4513;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    background-color: #fff;
+    border: solid 1px #000;
+    border-radius: 50px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%; /* Кнопки будут занимать всю ширину контейнера */
-    height: 50px; /* Устанавливаем одинаковую высоту */
+    transition: .3s;
+    width: 100%;
+    height: 50px
 }
 
-#complete-order:hover, #reset-ingredients:hover {
-    background-color: #a0522d;
+#complete-order:hover,
+#reset-ingredients:hover {
+    color: #e4002b
 }
 
-#complete-order:hover, #reset-ingredients:hover {
-    background-color: #a0522d;
-}
 .notification {
     position: fixed;
-    top: 20px;
+    top: 45%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
+    background-color: rgba(0, 0, 0, .4);
+    backdrop-filter: blur(4px);
+    color: #fff;
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 10px;
     z-index: 1000;
     display: none;
-}
-.notification button {
-    background-color: #ff5733;
-    border: none;
-    padding: 5px 10px;
-    color: white;
-    cursor: pointer;
-}
-.notification button:hover {
-    background-color: #cc4527;
+    animation: fadeIn 1s
 }
 
+.notification button {
+    background-color: #e4002b;
+    border: 0;
+    padding: 12px 24px;
+    font-family: 1.2em;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer
+}
+
+.notification button:hover {
+    background-color: #b10021
+}
 
 #orders-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 20px
 }
 
 #pending-orders {
-    background: #ffefd5;
-    margin: 10px;
-    border-radius: 5px;
-    font-size: 14px;
+    border: solid 1px #000;
+    border-radius: 10px;
     text-align: center;
-    margin-top: 20px;
+    margin-bottom: 10px
 }
 
-#current-order h3, #order-contents h3 {
-    margin-top: 0;
+#current-order h3,
+#order-contents h3 {
+    margin-top: 0
 }
-
 #cup-contents {
     padding: 10px;
     border: 1px dashed #ccc;
     background-color: #fff;
-    min-height: 100px;
+    min-height: 100px
 }
+
 #drag-ingredient {
     margin-top: 10px;
-    padding: 5px;
-    background: #ffe4b5;
-    border: 1px solid #cd853f;
-    border-radius: 5px;
+    padding: 10px 15px;
+    border: 2px solid #7d0017;
+    border-radius: 50px;
     cursor: grab;
     text-align: center;
     width: fit-content;
     user-select: none;
+    transition: .3s
 }
 
-/* Стили для select */
+#drag-ingredient:hover {
+    background-color: #f0f0f0
+}
+
 #ingredient-select {
-    width: 30%; /* Делаем меньше по ширине */
-    height: 35px;
-    padding: 8px; /* Уменьшаем внутренние отступы */
-    font-size: 14px; /* Меньше размер текста */
-    font-family: Arial, sans-serif;
-    background-color: #fffaf0; /* Светлый фон */
-    border: 2px solid #8b4513; /* Цвет границы под общий стиль */
-    border-radius: 5px; /* Скругляем углы */
-    color: #8b4513; /* Цвет текста */
+    width: 30%;
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #e4002b;
+    border-radius: 50px;
+    color: #e4002b;
     cursor: pointer;
-    appearance: none; /* Убираем стрелку браузера */
-    outline: none; /* Убираем контур при фокусе */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Легкий внутренний рельеф */
+    appearance: none;
+    outline: 0;
     text-align: center;
-    text-overflow: ellipsis; /* Перенос длинного текста */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22 viewBox=%220 0 10 10%22%3E%3Cpath d=%22M0 0 L10 0 L5 7 Z%22 fill=%22%238b4513%22/%3E%3C/svg%3E'); /* Иконка стрелки вниз */
+    text-overflow: ellipsis;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22 viewBox=%220 0 10 10%22%3E%3Cpath d=%22M0 0 L10 0 L5 7 Z%22 fill=%22%23E4002B%22/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: calc(100% - 10px) center;
+    background-position: calc(100% - 10px) center
 }
 
-/* Состояние при наведении */
 #ingredient-select:hover {
-    background-color: #fff5e6; /* Чуть более яркий фон */
-    border-color: #a0522d; /* Более тёплый цвет границы */
+    background-color: #f0f0f0;
+    border-color: #b10021
 }
 
-/* Состояние при фокусе */
 #ingredient-select:focus {
-    border-color: #cd853f;
-    box-shadow: 0 0 5px #cd853f; /* Подсветка при фокусе */
+    border-color: #f2f2f2
 }
 
-/* Стили для options */
 #ingredient-select option {
     font-size: 14px;
-    padding: 6px; /* Уменьшенные отступы для компактности */
-    font-family: Arial, sans-serif;
-    background-color: #fff; /* Фон опций */
-    color: #8b4513; /* Цвет текста */
-    text-align: center;
+    padding: 6px;
+    background-color: #fff;
+    color: #e4002b;
+    text-align: center
 }
 
-/* Стили для меню завершения игры */
 #game-over-menu {
     text-align: center;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 480px;
+    max-width: 480px
 }
 
-#game-over-menu h2 {
+#game-over-menu h2,
+#game-over-menu p {
     font-size: 2em;
-    color: #8b4513;
-    margin-bottom: 20px;
+    color: #e4002b;
+    margin-bottom: 20px
 }
 
 #game-over-menu p {
-    font-size: 1.5em;
-    color: #8b4513;
-    margin-bottom: 20px;
+    font-size: 1.5em
 }
 
 #game-over-menu button {
     padding: 12px 24px;
-    background-color: #8b4513;
-    color: white;
-    border: none;
+    background-color: #e4002b;
+    color: #fff;
+    border: 0;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.2em;
     width: 100%;
     max-width: 200px;
     margin-top: 10px;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color .3s, transform .2s
 }
 
-/* Эффекты при наведении и нажатии на кнопки */
 #game-over-menu button:hover {
-    background-color: #a0522d;
-    transform: scale(1.05);
+    background-color: #b10021;
+    transform: scale(1.05)
 }
 
 #game-over-menu button:active {
-    background-color: #cd853f;
-    transform: scale(0.98);
+    background-color: #7d0017;
+    transform: scale(.98)
 }
 
-
-
-
-
-@media (max-width: 600px) {
-    /* Общие настройки для мобильных устройств */
+@media (max-width:600px) {
     body {
-        font-size: 14px;  /* Уменьшаем общий размер шрифта */
+        font-size: 16px
     }
 
     #game-container {
         padding: 10px;
         max-width: 100%;
         height: 100%;
-        flex-direction: column;
+        flex-direction: column
     }
 
     #difficulty button {
-        padding: 8px 16px;  /* Уменьшаем отступы на кнопках */
-        font-size: 0.8em;  /* Меньше размер шрифта на мобильных */
-        max-width: 100%; /* Кнопки занимают всю ширину */
+        padding: 8px 16px;
+        max-width: 100%
     }
 
-    #queue, #current-order{
-        font-size: 12px;
-        padding: 8px;
+    #current-order,
+    #queue {
+        padding: 8px
     }
 
-    #pending-orders{
-        background: #ffefd5;
-        margin: 10px;
+    #pending-orders {
+        background: #fff;
+        margin: 10px
     }
 
     #ingredients {
         flex-wrap: wrap;
-        gap: 5px;
+        gap: 5px
     }
 
     .ingredient-container {
-        flex: 1 1 45%;  /* Уменьшаем размер контейнера */
-        margin-bottom: 5px;
+        flex: 1 1 45%;
+        margin-bottom: 5px
     }
 
     #cup {
-        width: 100%;  /* Ширина чашки 100% */
-        height: 70px;  /* Фиксированная высота */
-        background: #fff5ee;
-        border: 2px dashed #8b4513;
+        width: 100%;
+        height: 70px;
+        background: #fff;
+        border: 2px dashed #e4002b;
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        font-size: 12px;
-        color: #8b4513;
+        color: #e4002b;
         margin-top: 10px;
-        overflow: hidden;  /* Прячем переполнение текста */
-        word-wrap: break-word;  /* Переносим длинные строки текста */
+        overflow: hidden;
+        word-wrap: break-word
     }
 
-    #complete-order, #reset-ingredients {
+    #complete-order,
+    #reset-ingredients {
         padding: 10px;
-        font-size: 14px;  /* Уменьшаем размер шрифта */
-        height: 40px;  /* Уменьшаем высоту кнопок */
+        font-size: 14px;
+        height: 40px
     }
 
     #cup-contents {
-        font-size: 10px;  /* Уменьшаем шрифт */
+        font-size: 10px
     }
 
     #queue button {
-        padding: 8px 16px;  /* Уменьшаем отступы для кнопок */
-        font-size: 1em;  /* Уменьшаем размер шрифта */
-        height: 40px;  /* Уменьшаем высоту кнопок */
+        padding: 8px 16px;
+        font-size: 1em;
+        height: 40px
     }
 }
 
-@media (max-width: 600px) and (max-height: 700px) {
+@media (max-width:600px) and (max-height:700px) {
     body {
-        font-size: 12px;  /* Ещё меньше общий размер шрифта */
+        font-size: 12px
     }
 
     #main {
         flex: 0;
         display: flex;
-        justify-content: space-between;  /* Разместим элементы по бокам */
+        justify-content: space-between;
         padding: 10px;
-        gap: 20px;  /* Добавим отступ между блоками */
+        gap: 20px
     }
 
     #game-container {
         padding: 5px;
         max-width: 100%;
         height: 100%;
-        flex-direction: column;
+        flex-direction: column
     }
 
     #difficulty button {
-        padding: 6px 12px;  /* Ещё меньше отступы */
-        font-size: 0.7em;  /* Уменьшаем шрифт */
-        max-width: 100%;
+        padding: 6px 12px;
+        font-size: .7em;
+        max-width: 100%
     }
 
-    #queue, #current-order {
-        background: #ffefd5;
+    #current-order,
+    #queue {
+        background: #fff;
         padding: 10px;
         border-radius: 5px;
-        font-size: 14px;  /* Размер текста внутри контейнеров */
-        overflow: hidden; /* Скрываем переполнение */
+        font-size: 14px;
         text-align: center;
-        width: 48%;  /* Устанавливаем ширину каждого контейнера */
-        height: 150px;
+        width: 48%;
+        height: 150px
     }
 
-    #pending-orders{
-        background: #ffefd5;
-        margin: 10px;
+    #pending-orders {
+        background: #fff;
+        margin: 10px
     }
 
     #ingredients {
-        gap: 5px;  /* Уменьшаем промежутки */
+        gap: 5px
     }
 
-    .ingredient-container {
-        flex: 1 1 45%;  /* Уменьшаем ширину контейнеров */
-        margin-bottom: 5px;
+.ingredient-container {
+        flex: 1 1 45%;
+        margin-bottom: 5px
     }
 
     #cup {
         width: 100%;
-        height: 80px;  /* Ещё меньше высота чашки */
-        background: #fff5ee;
-        border: 2px dashed #8b4513;
+        height: 80px;
+        background: #fff;
+        border: 2px dashed #e4002b;
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        font-size: 10px;  /* Уменьшаем шрифт для текста внутри */
-        color: #8b4513;
+        font-size: 10px;
+        color: #e4002b;
         margin-top: 5px;
-        overflow: hidden;  /* Прячем текст за границами */
-        word-wrap: break-word;  /* Переносим текст на новую строку */
+        overflow: hidden;
+        word-wrap: break-word
     }
 
-    #complete-order, #reset-ingredients {
+    #complete-order,
+    #ingredient-select,
+    #reset-ingredients {
         padding: 8px;
-        font-size: 12px;  /* Уменьшаем размер шрифта кнопок */
-        height: 35px;  /* Ещё меньше высота кнопок */
-    }
-
-    #cup-contents {
-        font-size: 8px;  /* Ещё меньше шрифт для содержимого чашки */
+        height: 35px
     }
 
     #queue button {
-        padding: 6px 11px;  /* Ещё меньше отступы внутри кнопок */
-        font-size: 0.9em;  /* Уменьшаем размер шрифта кнопок */
-        height: 42px;  /* Ещё меньше высота кнопок */
+        padding: 6px 11px;
+        height: 42px
     }
 
-
-    /* Стили для select */
-#ingredient-select {
-    width: 30%; /* Делаем меньше по ширине */
-    height: 35px;
-    padding: 8px; /* Уменьшаем внутренние отступы */
-    font-size: 14px; /* Меньше размер текста */
-    font-family: Arial, sans-serif;
-    background-color: #fffaf0; /* Светлый фон */
-    border: 2px solid #8b4513; /* Цвет границы под общий стиль */
-    border-radius: 5px; /* Скругляем углы */
-    color: #8b4513; /* Цвет текста */
-    cursor: pointer;
-    appearance: none; /* Убираем стрелку браузера */
-    outline: none; /* Убираем контур при фокусе */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Легкий внутренний рельеф */
-    text-align: center;
-    text-overflow: ellipsis; /* Перенос длинного текста */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22 viewBox=%220 0 10 10%22%3E%3Cpath d=%22M0 0 L10 0 L5 7 Z%22 fill=%22%238b4513%22/%3E%3C/svg%3E'); /* Иконка стрелки вниз */
-    background-repeat: no-repeat;
-    background-position: calc(100% - 10px) center;
+    #ingredient-select {
+        width: 30%;
+        background-color: #fffaf0;
+        border: 2px solid #e4002b;
+        border-radius: 5px;
+        color: #e4002b;
+        cursor: pointer;
+        appearance: none;
+        outline: 0;
+        text-align: center;
+        text-overflow: ellipsis;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22 viewBox=%220 0 10 10%22%3E%3Cpath d=%22M0 0 L10 0 L5 7 Z%22 fill=%22%23E4002B%22/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 10px) center
+    }
 }
+
+button,
+input,
+select {
+    transition: .5s;
+    font-family: "Visby CF", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 16px;
 }

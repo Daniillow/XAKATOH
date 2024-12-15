@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barista Dash - Главное меню</title>
     <link rel="stylesheet" href="styleMenu.css">
+
 </head>
 <body>
     <!-- Главное меню -->
@@ -17,7 +18,47 @@
     <div id="game-instruction" style="display: none;">
         <h2>Как играть</h2>
         <div class="instruction-content">
-            <img src="assets/images/game-instruction.png" alt="Инструкция к игре" class="instruction-img">
+            <input type="hidden" id="difficulty" value="easy"> <!-- или "medium" в зависимости от выбранного уровня -->
+            <div id="game-container">
+                <div id="header">
+                    <div id="timer">⏳ Время: 0:00</div>
+                    <div id="score">⭐ Очки: 0</div>   
+                </div>
+                <p id="result" style="display:none;"></p>
+                    <div id="main">
+                        <div id="queue">
+                            <p>Здесь выбирается заказ для выполнения.</p>
+                        </div>
+                        <div id="current-order">
+                            <h3>Текущий заказ:</h3>
+                            <div id="order-details">
+                                <p>Информация о текущем заказе.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pending-orders">
+                        <p>Информация о количестве человек в очереди.</p>
+                    </div>
+                    <div id="kitchen">
+                        <div id="ingredients">
+                            <select id="ingredient-select">
+                                <option>Нажми сюда!</option>
+                                <option>Здесь можно выбрать ингредиент.</option>
+                            </select>
+                            <input type="range" id="quantity-slider" min="10" max="100" step="10" value="50">
+
+                            <span id="quantity-display">Кол-во ингредиента.</span>
+                            
+                        </div>
+                        <div id="drag-ingredient" draggable="true">Перетаскиваемый ингредиент</div>                                               
+                        <div id="cup" class="dropzone">
+                            <p>Перетащите сюда ингредиенты</p>
+                        </div>
+                        <button id="complete-order">Завершить заказ</button>
+                        <button id="reset-ingredients">Сбросить ингредиенты</button>              
+                    </div>
+                </div>
+            </div>
             <button id="start-game-button">Понятно!</button>
         </div>
     </div>

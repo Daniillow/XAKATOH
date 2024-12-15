@@ -1,0 +1,168 @@
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-LightOblique.eot');
+    src: local('Visby CF Light Oblique'), local('VisbyCF-LightOblique'),
+        url('VisbyCF-LightOblique.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-LightOblique.woff2') format('woff2'),
+        url('VisbyCF-LightOblique.woff') format('woff'),
+        url('VisbyCF-LightOblique.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-Bold.eot');
+    src: local('Visby CF Bold'), local('VisbyCF-Bold'),
+        url('VisbyCF-Bold.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-Bold.woff2') format('woff2'),
+        url('VisbyCF-Bold.woff') format('woff'),
+        url('VisbyCF-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-Light.eot');
+    src: local('Visby CF Light'), local('VisbyCF-Light'),
+        url('VisbyCF-Light.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-Light.woff2') format('woff2'),
+        url('VisbyCF-Light.woff') format('woff'),
+        url('VisbyCF-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby CF Extra';
+    src: url('VisbyCF-ExtraBold.eot');
+    src: local('Visby CF Extra Bold'), local('VisbyCF-ExtraBold'),
+        url('VisbyCF-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-ExtraBold.woff2') format('woff2'),
+        url('VisbyCF-ExtraBold.woff') format('woff'),
+        url('VisbyCF-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-BoldOblique.eot');
+    src: local('Visby CF Bold Oblique'), local('VisbyCF-BoldOblique'),
+        url('VisbyCF-BoldOblique.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-BoldOblique.woff2') format('woff2'),
+        url('VisbyCF-BoldOblique.woff') format('woff'),
+        url('VisbyCF-BoldOblique.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-ThinOblique.eot');
+    src: local('Visby CF Thin Oblique'), local('VisbyCF-ThinOblique'),
+        url('VisbyCF-ThinOblique.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-ThinOblique.woff2') format('woff2'),
+        url('VisbyCF-ThinOblique.woff') format('woff'),
+        url('VisbyCF-ThinOblique.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-Heavy.eot');
+    src: local('Visby CF Heavy'), local('VisbyCF-Heavy'),
+        url('VisbyCF-Heavy.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-Heavy.woff2') format('woff2'),
+        url('VisbyCF-Heavy.woff') format('woff'),
+        url('VisbyCF-Heavy.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-Thin.eot');
+    src: local('Visby CF Thin'), local('VisbyCF-Thin'),
+        url('VisbyCF-Thin.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-Thin.woff2') format('woff2'),
+        url('VisbyCF-Thin.woff') format('woff'),
+        url('VisbyCF-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-Medium.eot');
+    src: local('Visby CF Medium'), local('VisbyCF-Medium'),
+        url('VisbyCF-Medium.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-Medium.woff2') format('woff2'),
+        url('VisbyCF-Medium.woff') format('woff'),
+        url('VisbyCF-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-ExtraBoldOblique.eot');
+    src: local('Visby CF Extra Bold Oblique'), local('VisbyCF-ExtraBoldOblique'),
+        url('VisbyCF-ExtraBoldOblique.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-ExtraBoldOblique.woff2') format('woff2'),
+        url('VisbyCF-ExtraBoldOblique.woff') format('woff'),
+        url('VisbyCF-ExtraBoldOblique.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-MediumOblique.eot');
+    src: local('Visby CF Medium Oblique'), local('VisbyCF-MediumOblique'),
+        url('VisbyCF-MediumOblique.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-MediumOblique.woff2') format('woff2'),
+        url('VisbyCF-MediumOblique.woff') format('woff'),
+        url('VisbyCF-MediumOblique.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Visby CF';
+    src: url('VisbyCF-HeavyOblique.eot');
+    src: local('Visby CF Heavy Oblique'), local('VisbyCF-HeavyOblique'),
+        url('VisbyCF-HeavyOblique.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-HeavyOblique.woff2') format('woff2'),
+        url('VisbyCF-HeavyOblique.woff') format('woff'),
+        url('VisbyCF-HeavyOblique.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Visby CF Demi';
+    src: url('VisbyCF-DemiBold.eot');
+    src: local('Visby CF Demi Bold'), local('VisbyCF-DemiBold'),
+        url('VisbyCF-DemiBold.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-DemiBold.woff2') format('woff2'),
+        url('VisbyCF-DemiBold.woff') format('woff'),
+        url('VisbyCF-DemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby CF Demi Bold Oblique';
+    src: url('VisbyCF-DemiBoldOblique.eot');
+    src: local('Visby CF Demi Bold Oblique'), local('VisbyCF-DemiBoldOblique'),
+        url('VisbyCF-DemiBoldOblique.eot?#iefix') format('embedded-opentype'),
+        url('VisbyCF-DemiBoldOblique.woff2') format('woff2'),
+        url('VisbyCF-DemiBoldOblique.woff') format('woff'),
+        url('VisbyCF-DemiBoldOblique.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+

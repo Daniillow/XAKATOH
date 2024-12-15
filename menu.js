@@ -14,35 +14,6 @@ document.getElementById('start-game-button').addEventListener('click', () => {
     document.getElementById('difficulty-menu').style.display = 'block';
 });
 
-// Массив для хранения уведомлений
-let notifications = [];
-
-// Уведомления показываются только при первом нажатии "Играть"
-let notificationsShown = false;
-document.getElementById('play-button').addEventListener('click', () => {
-    if (!notificationsShown) {
-        notificationsShown = true;
-
-        setTimeout(() => notifications.push(showNotification('Тут будет появляться заказ, который можно выбрать', '19%', '25%')), 500);
-        setTimeout(() => notifications.push(showNotification('Тут находится текущий заказ', '19%', '55%')), 1000);
-        setTimeout(() => notifications.push(showNotification('Выбор ингредиентов', '30%', '32%')), 1500);
-        setTimeout(() => notifications.push(showNotification('Регулировка количества ингредиентов', '30%', '45%')), 2000);
-        setTimeout(() => notifications.push(showNotification('Блок для перетаскивания ингредиентов', '43%', '55%')), 2500);
-    }
-});
-
-// Функция для показа уведомлений
-function showNotification(text, top, left) {
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = text;
-    notification.style.top = top;
-    notification.style.left = left;
-
-    document.body.appendChild(notification);
-    return notification;
-}
-
 // Удаление всех уведомлений при нажатии на "Понятно!"
 document.getElementById('start-game-button').addEventListener('click', () => {
     // Удаляем все уведомления

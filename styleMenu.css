@@ -1,206 +1,361 @@
-/* Общие стили для тела страницы */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f5f5dc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-}
+@import url(fonts/stylesheet.css);
 
-/* Стили для главного меню */
-#main-menu {
-    text-align: center;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 480px;
-}
-
-#main-menu h1 {
-    font-size: 2em;
-    color: #8b4513;
-    margin-bottom: 20px;
-}
-
-/* Кнопка "Играть" в главном меню */
-#play-button {
-    padding: 12px 24px;
-    background-color: #8b4513;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.5em;
-    width: 100%;
-    max-width: 200px;
-    margin-top: 20px;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-/* Эффекты при наведении и нажатии на кнопку "Играть" */
-#play-button:hover {
-    background-color: #a0522d;
-    transform: scale(1.05);
-}
-
-#play-button:active {
-    background-color: #cd853f;
-    transform: scale(0.98);
-}
-
-/* Меню выбора сложности */
-#difficulty-menu {
-    text-align: center;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 480px;
-    display: none; /* Скрыто по умолчанию */
-}
-
-#difficulty-menu h2 {
-    font-size: 1.8em;
-    color: #8b4513;
-    margin-bottom: 20px;
-}
-
-/* Кнопки для выбора уровня сложности */
-#difficulty-menu button {
-    padding: 12px 24px;
-    background-color: #8b4513;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2em;
-    width: 100%;
-    max-width: 180px;
-    margin: 10px 0;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#difficulty-menu {
-    display: none; /* По умолчанию скрыто */
-}
-
-
-/* Эффекты при наведении и нажатии на кнопки выбора сложности */
-#difficulty-menu button:hover {
-    background-color: #a0522d;
-    transform: scale(1.05);
-}
-
-#difficulty-menu button:active {
-    background-color: #cd853f;
-    transform: scale(0.98);
-}
-
-#game-instruction {
-    text-align: center;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 480px;
-    margin: auto;
-}
-
-#game-instruction h2 {
-    font-size: 1.8em;
-    color: #8b4513;
-    margin-bottom: 10px;
-}
-
-#game-instruction img {
-    margin-bottom: 15px;
-}
-
-#start-game-button {
-    padding: 12px 24px;
-    background-color: #8b4513;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2em;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#start-game-button:hover {
-    background-color: #a0522d;
-    transform: scale(1.05);
-}
-
-
-/* Стили для уведомлений */
-.notification {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 1em;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    white-space: nowrap;
-    animation: fadeIn 0.5s ease;
-}
-
-/* Контейнер с инструкцией */
-.instruction-content, .game-instruction {
-    display: flex;
-    flex-direction: column; /* Элементы идут в колонку */
-    align-items: center;    /* Центрирование по горизонтали */
-    gap: 15px;              /* Отступ между элементами */
-    margin: 0 auto;
-}
-
-/* Изображение в инструкции */
-.instruction-img {
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 15px;
-}
-
-/* Анимация появления */
 @keyframes fadeIn {
-    from {
+    0% {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    font-family: "Visby CF", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
 
-/* Медиа запросы для мобильных устройств */
-@media (max-width: 600px) {
-    /* Меню на мобильных */
-    #main-menu {
+#main-menu, #game-instruction {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    width: 100%;
+    max-width: 520px;
+    animation: fadeIn 1s;
+}
+
+#difficulty-menu {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    width: 100%;
+    max-width: 480px;
+    display: none;
+    animation: fadeIn 1s;
+}
+
+#difficulty-menu h2,
+#main-menu h1 {
+    font-size: 2em;
+    color: #e4002b;
+    margin-bottom: 20px;
+}
+
+#difficulty-menu button,
+#play-button,
+#start-game-button {
+    padding: 12px 24px;
+    background-color: #e4002b;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color .3s, transform .2s;
+}
+
+#play-button, #start-game-button {
+    font-size: 1.5em;
+    max-width: 200px;
+    margin-top: 20px;
+}
+
+#difficulty-menu button:hover,
+#play-button:hover,
+#start-game-button:hover {
+    background-color: #b10021;
+    transform: scale(1.05);
+}
+
+#difficulty-menu button:active,
+#play-button:active,
+#start-game-button:active {
+    background-color: #7d0017;
+    transform: scale(.98);
+}
+
+#difficulty-menu button {
+    font-size: 1.2em;
+    max-width: 180px;
+    margin: 10px 0;
+}
+
+/* Основные стили для игры */
+
+#game-container {
+    padding: 20px;
+    width: 100%;
+    max-width: 480px;
+    background: #fff;
+    border-radius: 10px;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+}
+
+#header,
+#main {
+    display: flex;
+    justify-content: space-between;
+}
+
+#header {
+    border: solid 1px #000;
+    padding: 10px;
+    font-size: 1.2em;
+    text-align: center;
+    flex-wrap: wrap;
+    border-radius: 10px;
+}
+
+#main {
+    flex: 0;
+    padding: 10px 0;
+    gap: 20px;
+}
+
+#difficulty {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: solid 1px #000;
+    border-radius: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+#difficulty button {
+    padding: 12px 24px;
+    background-color: #fff;
+    border: solid 1px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 100%;
+    max-width: 180px;
+    flex-grow: 1;
+}
+
+#current-order,
+#queue,
+#queue button {
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+}
+
+#ingredients,
+#kitchen {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#kitchen {
+    border: solid 1px #000;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+#ingredients {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.ingredient-container {
+    flex: 1 1 48%;
+    margin-bottom: 10px;
+}
+
+#cup,
+.ingredient {
+    width: 100%;
+    text-align: center;
+}
+
+.ingredient {
+    padding: 8px;
+    border: 1px solid #7d0017;
+    border-radius: 5px;
+    cursor: grab;
+}
+
+.quantity {
+    width: 80px;
+}
+
+.quantity-display {
+    font-size: 14px;
+    color: #e4002b;
+}
+
+#cup {
+    height: 120px;
+    background: #fff;
+    border: 2px dashed #e4002b;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e4002b;
+    margin-top: 10px;
+}
+
+#cup.dragover {
+    background: #fff0f5;
+}
+
+#complete-order,
+#reset-ingredients {
+    padding: 15px;
+    margin-top: 10px;
+    background-color: #fff;
+    border: solid 1px #000;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .3s;
+    width: 100%;
+    height: 50px;
+}
+
+#complete-order:hover,
+#reset-ingredients:hover {
+    color: #e4002b;
+}
+
+
+#ingredient-select {
+    width: 30%;
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #e4002b;
+    border-radius: 50px;
+    color: #e4002b;
+    cursor: pointer;
+    appearance: none;
+    outline: 0;
+    text-align: center;
+    text-overflow: ellipsis;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22 viewBox=%220 0 10 10%22%3E%3Cpath d=%22M0 0 L10 0 L5 7 Z%22 fill=%22%23E4002B%22/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center
+}
+
+#ingredient-select:hover {
+    background-color: #f0f0f0;
+    border-color: #b10021
+}
+
+#ingredient-select:focus {
+    border-color: #f2f2f2
+}
+
+#ingredient-select option {
+    font-size: 14px;
+    padding: 6px;
+    background-color: #fff;
+    color: #e4002b;
+    text-align: center
+}
+#drag-ingredient {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: 2px solid #7d0017;
+    border-radius: 50px;
+    cursor: grab;
+    text-align: center;
+    width: fit-content;
+    user-select: none;
+    transition: .3s
+}
+
+#drag-ingredient:hover {
+    background-color: #f0f0f0
+}
+/* Адаптация для мобильных экранов */
+/* Адаптация для мобильных экранов */
+@media (max-width: 700px) {
+    body {
+        flex-direction: column;
+        font-size: 10px; /* Уменьшаем общий шрифт */
+    }
+    #main {
+    
+        gap: 10px; /* Уменьшаем промежутки между элементами */
+        height: 80px;
+    }
+
+    #main-menu, #game-instruction, #difficulty-menu, #game-container {
         padding: 10px;
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
     }
 
-    #play-button {
-        font-size: 1.2em;
-        padding: 10px 20px;
+    #difficulty-menu button,
+    #play-button,
+    #start-game-button,
+    #complete-order,
+    #reset-ingredients,
+    #ingredient-select {
+        width: 100%;
+        font-size: 1em; /* Уменьшаем шрифт кнопок */
     }
 
-    #difficulty-menu {
-        padding: 15px;
+    .ingredient-container {
+        flex: 1 1 100%;
     }
-    #difficulty-menu button {
-        font-size: 1em;
-        padding: 10px 20px;
+
+    #difficulty {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    #difficulty button {
+        max-width: 100%;
+    }
+
+    #ingredients,
+    #kitchen {
+        flex-direction: column;
+    }
+
+    #cup {
+        height: 80%; /* Уменьшаем высоту чашки */
+        margin-top: 10px;
+        font-size: 10px; /* Уменьшаем шрифт внутри чашки */
+    }
+
+    .ingredient {
+        width: 100%;
+    }
+
+    #ingredient-select {
+        width: 100%;
+    }
+
+    #complete-order,
+    #reset-ingredients {
+        font-size: 10px; /* Уменьшаем шрифт кнопок */
+        height: 10px; /* Уменьшаем высоту кнопок */
     }
 }
+
