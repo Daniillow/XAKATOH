@@ -34,6 +34,8 @@ body {
     animation: fadeIn 1s;
 }
 
+
+
 #difficulty-menu {
     text-align: center;
     background: #fff;
@@ -49,13 +51,13 @@ body {
 #difficulty-menu h2,
 #main-menu h1 {
     font-size: 2em;
-    color: #e4002b;
+    color: #000;
     margin-bottom: 20px;
 }
 
 #difficulty-menu button,
 #play-button,
-#start-game-button {
+#start-game-button, #music-toggle {
     padding: 12px 24px;
     background-color: #e4002b;
     color: #fff;
@@ -72,16 +74,22 @@ body {
     margin-top: 20px;
 }
 
+#music-toggle {
+    font-size: 1em;
+    max-width: 200px;
+    margin: 20px;
+}
+
 #difficulty-menu button:hover,
 #play-button:hover,
-#start-game-button:hover {
+#start-game-button:hover, #music-toggle:hover {
     background-color: #b10021;
     transform: scale(1.05);
 }
 
 #difficulty-menu button:active,
 #play-button:active,
-#start-game-button:active {
+#start-game-button:active, #music-toggle:active {
     background-color: #7d0017;
     transform: scale(.98);
 }
@@ -290,7 +298,32 @@ body {
 #drag-ingredient:hover {
     background-color: #f0f0f0
 }
-/* Адаптация для мобильных экранов */
+#music-settings {
+    margin-top: 20px;
+}
+
+#music-settings label {
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+#volume-slider {
+    width: 150px;
+}
+
+#toggle-music {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#menu-icon {
+    width: 200px; /* Ширина изображения */
+    height: auto; /* Автоматическое сохранение пропорций */
+    display: block; /* Устанавливает изображение как блочный элемент */
+    margin: 0 auto 20px; /* Центрирование и отступ снизу */
+}
 /* Адаптация для мобильных экранов */
 @media (max-width: 700px) {
     body {

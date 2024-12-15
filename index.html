@@ -5,13 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barista Dash - Главное меню</title>
     <link rel="stylesheet" href="styleMenu.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
 
 </head>
 <body>
     <!-- Главное меню -->
     <div id="main-menu">
+        <img src="assets/images/menu-icon.png" alt="Barista Dash Icon" id="menu-icon">
         <h1>Barista Dash</h1>
         <button id="play-button">Играть</button>
+        <div id="music-settings">
+            <button id="music-toggle">Включить/Выключить музыку</button>
+        </div>
+        <label for="music-volume-slider">Громкость:</label>
+            <input type="range" id="music-volume-slider" min="0" max="100" value="50">
+        <audio id="background-music" autoplay loop>
+            <source src="assets/audio/background-music-main-menu.mp3" type="audio/mpeg">
+            Ваш браузер не поддерживает элемент audio.
+        </audio>
     </div>
 
     <!-- Блок инструкций -->
